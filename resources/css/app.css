@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] {
+    display: none;
+}
+
+
+.bank-green-bg {
+    background-color: #377b2b;
+}
+
+/* Define custom hover styles */
+.hover\:bg-bank:hover {
+    background-color: #faa819;
+}
