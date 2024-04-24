@@ -5,19 +5,44 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreMeetingRequest;
 use App\Http\Requests\UpdateMeetingRequest;
 use App\Models\Meeting;
+use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class MeetingController extends Controller
+class MeetingController extends Controller implements HasMiddleware
 {
+
+    public static function middleware(): array
+    {
+        return [
+
+            new Middleware('role_or_permission:meetings-access|meeting-view|meeting-edit', only: ['index']),
+            new Middleware('role_or_permission:meeting-edit', only: ['edit']),
+            new Middleware('role_or_permission:meeting-view', only: ['show']),
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $meetings = QueryBuilder::for(Meeting::class)
-            ->allowedFilters(['id','title', 'description', 'path_attachment'])
-            ->orderByDesc('id')
-            ->get();
+        $meetings = null;
+        if (Auth::user()->hasRole(['Super-Admin', 'Company Secretary'])) {
+            $meetings = QueryBuilder::for(Meeting::class)
+                ->allowedFilters(['id', 'title', 'description', 'path_attachment'])
+                ->with('comments')
+                ->orderByDesc('id')
+                ->get();
+        } else {
+            $meetings = QueryBuilder::for(Meeting::class)
+                ->allowedFilters(['id', 'title', 'description', 'path_attachment'])
+                ->where('status','Unlock')
+                ->with('comments')
+                ->orderByDesc('id')
+                ->get();
+        }
 
         return view('meetings.index', compact('meetings'));
     }

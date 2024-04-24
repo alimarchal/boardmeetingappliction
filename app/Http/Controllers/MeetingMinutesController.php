@@ -6,9 +6,21 @@ use App\Http\Requests\StoreMeetingMinutesRequest;
 use App\Http\Requests\UpdateMeetingMinutesRequest;
 use App\Models\Meeting;
 use App\Models\MeetingMinutes;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class MeetingMinutesController extends Controller
+class MeetingMinutesController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+
+            new Middleware('role_or_permission:meeting-minutes-access|meeting-minutes-edit|meeting-minutes-view|meeting-minutes-delete', only: ['index']),
+            new Middleware('role_or_permission:meeting-minutes-edit', only: ['edit']),
+            new Middleware('role_or_permission:meeting-minutes-view', only: ['show']),
+            new Middleware('role_or_permission:meeting-minutes-delete', only: ['destroy']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */

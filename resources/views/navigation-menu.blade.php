@@ -17,17 +17,35 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    <x-nav-link href="{{ route('meeting.index') }}" :active="request()->routeIs('meeting.*')">
-                        {{ __('Meetings') }}
-                    </x-nav-link>
+                    @can('meetings-access')
+                        <x-nav-link href="{{ route('meeting.index') }}" :active="request()->routeIs('meeting.*')">
+                            {{ __('Meetings') }}
+                        </x-nav-link>
+                    @endcan
 
-                    <x-nav-link href="{{ route('attendance.index') }}" :active="request()->routeIs('attendance.*')">
-                        {{ __('Attendance') }}
-                    </x-nav-link>
 
-                    <x-nav-link href="{{ route('meeting-minutes.index') }}" :active="request()->routeIs('meeting-minutes.*')">
-                        {{ __('Meeting Minutes') }}
-                    </x-nav-link>
+                    @can('attendance-access')
+                        <x-nav-link href="{{ route('attendance.index') }}" :active="request()->routeIs('attendance.*')">
+                            {{ __('Attendance') }}
+                        </x-nav-link>
+                    @endcan
+
+
+                    @can('meeting-minutes-access')
+                        <x-nav-link href="{{ route('meeting-minutes.index') }}" :active="request()->routeIs('meeting-minutes.*')">
+                            {{ __('Meeting Minutes') }}
+                        </x-nav-link>
+                    @endcan
+
+
+                    @can('users-access')
+                        <x-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.*')">
+                            {{ __('Users') }}
+                        </x-nav-link>
+                    @endcan
+
+
+
                 </div>
             </div>
 

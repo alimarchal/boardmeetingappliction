@@ -20,10 +20,24 @@ class PermissionsDemoSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         // create permissions
-//        Permission::create(['name' => 'edit articles']);
-//        Permission::create(['name' => 'delete articles']);
-//        Permission::create(['name' => 'publish articles']);
-//        Permission::create(['name' => 'unpublish articles']);
+        Permission::create(['name' => 'meetings-access']);
+        Permission::create(['name' => 'meeting-edit']);
+        Permission::create(['name' => 'meeting-view']);
+
+        Permission::create(['name' => 'attendance-access']);
+        Permission::create(['name' => 'attendance-show']);
+        Permission::create(['name' => 'attendance-edit']);
+        Permission::create(['name' => 'attendance-delete']);
+
+        Permission::create(['name' => 'meeting-minutes-access']);
+        Permission::create(['name' => 'meeting-minutes-edit']);
+        Permission::create(['name' => 'meeting-minutes-view']);
+        Permission::create(['name' => 'meeting-minutes-delete']);
+
+        Permission::create(['name' => 'users-access']);
+        Permission::create(['name' => 'users-create']);
+        Permission::create(['name' => 'users-edit']);
+        Permission::create(['name' => 'users-view']);
 
         // create roles and assign existing permissions
         $role1 = Role::create(['name' => 'Board Member']);

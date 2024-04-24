@@ -6,10 +6,34 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\MeetingMinutesController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Models\Permission;
 
+/*
+        Permission::create(['name' => 'meetings-access']);
+        Permission::create(['name' => 'meeting-edit']);
+        Permission::create(['name' => 'meeting-view']);
+
+        Permission::create(['name' => 'attendance-access']);
+        Permission::create(['name' => 'attendance-show']);
+        Permission::create(['name' => 'attendance-edit']);
+        Permission::create(['name' => 'attendance-delete']);
+
+        Permission::create(['name' => 'meeting-minutes-access']);
+        Permission::create(['name' => 'meeting-minutes-edit']);
+        Permission::create(['name' => 'meeting-minutes-view']);
+        Permission::create(['name' => 'meeting-minutes-delete']);
+
+        Permission::create(['name' => 'users-access']);
+        Permission::create(['name' => 'users-create']);
+        Permission::create(['name' => 'users-edit']);
+        Permission::create(['name' => 'users-view']);
+        app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
+ */
 Route::get('/', function () {
-//    return view('welcome');
+
+
     return to_route('login');
 });
 
@@ -36,6 +60,12 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::put('/meeting-minutes/{meetingMinutes}',[MeetingMinutesController::class, 'update'])->name('meeting-minutes.update');
     Route::post('/meeting-minutes',[MeetingMinutesController::class, 'store'])->name('meeting-minutes.store');
     Route::delete('/meeting-minutes/{meetingMinutes}',[MeetingMinutesController::class, 'destroy'])->name('meeting-minutes.destroy');
+
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
+    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
 
 
 //    Route::resource('agenda-items', AgendaItemsController::class);

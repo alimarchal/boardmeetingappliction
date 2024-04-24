@@ -28,7 +28,7 @@
         </div>
     </x-slot>
 
-    <div class="max-w-8xl mx-auto px-4 sm:px-2 lg:px-8 print:hidden " style="display: none" id="filters">
+    <div class="max-w-7xl mx-auto px-4 sm:px-2 lg:px-8 print:hidden " style="display: none" id="filters">
         <div class="rounded-xl p-4 bg-white shadow-lg">
             <form method="GET" action="{{ route('meeting.index') }}">
                 <div class="mt-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -59,12 +59,11 @@
                     </x-button>
                 </div>
             </form>
-
         </div>
     </div>
 
     <div class="py-3">
-        <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 @if($meetings->isNotEmpty())
                     <div class="relative overflow-x-auto rounded-lg ">
@@ -120,23 +119,17 @@
 
                                     <td class="py-1 px-2 text-center">
 
-                                        <a href="{{ route('meeting.edit', $mt->id) }}" class="inline-flex items-center px-4 py-2 bg-red-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                        @can('meeting-edit')
+                                            <a href="{{ route('meeting.edit', $mt->id) }}" class="inline-flex items-center px-4 py-2 bg-red-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                                Edit
+                                            </a>
+                                        @endcan
 
-                                            Edit
-{{--                                            <img src="https://img.icons8.com/?size=160&id=64058&format=png" alt="Edit" class="w-8 h-8">--}}
-{{--                                            <svg data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"--}}
-{{--                                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"></path>--}}
-{{--                                            </svg>--}}
-                                        </a>
-
-                                        <a href="{{ route('meeting.show', $mt->id) }}" class="inline-flex items-center px-4 py-2 bg-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                            View
-{{--                                            <img src="https://img.icons8.com/?size=128&id=119220&format=png" alt="Show" class="w-8 h-8">--}}
-{{--                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">--}}
-{{--                                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />--}}
-{{--                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />--}}
-{{--                                            </svg>--}}
-                                        </a>
+                                        @can('meeting-view')
+                                            <a href="{{ route('meeting.show', $mt->id) }}" class="inline-flex items-center px-4 py-2 bg-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                                View
+                                            </a>
+                                        @endcan
                                     </td>
                                 </tr>
                                 </tbody>

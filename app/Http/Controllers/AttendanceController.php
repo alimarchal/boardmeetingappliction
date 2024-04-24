@@ -7,9 +7,21 @@ use App\Http\Requests\UpdateAttendanceRequest;
 use App\Models\Attendance;
 use App\Models\Meeting;
 use App\Models\User;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class AttendanceController extends Controller
+class AttendanceController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+
+            new Middleware('role_or_permission:attendance-access|attendance-edit|attendance-delete', only: ['index']),
+            new Middleware('role_or_permission:attendance-edit', only: ['edit']),
+            new Middleware('role_or_permission:attendance-show', only: ['show']),
+            new Middleware('role_or_permission:attendance-delete', only: ['destroy']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
