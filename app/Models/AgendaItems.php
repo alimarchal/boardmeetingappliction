@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AgendaItems extends Model
@@ -15,6 +16,7 @@ class AgendaItems extends Model
 
     protected $fillable = [
         'meeting_id',
+        'user_id',
         'title',
         'description',
         'order',

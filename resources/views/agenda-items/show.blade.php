@@ -130,6 +130,8 @@
                             Date & Time: {{ \Carbon\Carbon::parse($meeting->date_and_time)->format('d-M-Y H:i:s') }} PST
                             <br>
                             <span style="font-size: 14px;">MUID: {{ $meeting->id }}</span>
+                            <br>
+                            Item: {{ $agendaItems->order }}  - {{ $agendaItems->title }}
                             {{--                                        Created At :: {{ \Carbon\Carbon::parse($meeting->created_at)->format('d-m-Y H:i:s a') }}--}}
                         </td>
                     </tr>
@@ -141,120 +143,51 @@
 
                 <hr class="mb-1 mt-1">
 
-                @if(!empty($meeting->agenda_items))
-                    <h1 class="text-2xl text-center mb-2 mt-1 font-bold">Meeting Agendas</h1>
-                    <div class="relative overflow-x-auto ">
-                        <table class="min-w-max w-full table-auto">
-                            <thead>
-                            <tr class="bg-gray-200 text-white bank-green-bg uppercase text-sm" >
-                                <th class="py-2 px-2 text-center">ID</th>
-                                <th class="py-2 px-2 text-center">Agenda Title</th>
-                                {{--                            <th class="py-2 px-2 text-center">Attachment</th>--}}
-                                <th class="py-2 px-2 text-center">Order</th>
-                                <th class="py-2 px-2 text-center">Action</th>
-                            </tr>
-                            </thead>
-                            @foreach($meeting->agenda_items->sortBy('order') as $ai)
-                                <tbody class="text-black text-sm leading-normal ">
-                                <tr class="border-b border-gray-200 hover:bg-gray-100">
-                                    <td class="py-1 px-2 text-center">
-                                        {{ $loop->iteration }}
-                                    </td>
-                                    <td class="py-1 px-2 text-center">
-                                        {{ $ai->title }}
-                                    </td>
+{{--                <form method="POST" action="{{ route('meeting.agenda-item.store', $meeting->id) }}" enctype="multipart/form-data">--}}
+{{--                    <x-status-message class="ml-4 mt-4"/>--}}
+{{--                    <x-validation-errors class="ml-4 mt-4"/>--}}
+{{--                    @csrf--}}
+{{--                    <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4 mt-4 pl-8 pb-4 pt-4 pr-8">--}}
+{{--                        <div>--}}
+{{--                            <x-label for="title" value="Meeting Agenda Title" :required="true"/>--}}
+{{--                            <x-input id="title" name="title" class="block mt-1 w-full" type="text"  value="{{ old('title') }}"/>--}}
+{{--                        </div>--}}
 
-                                    <td class="py-1 px-2 text-center">
-                                        {{ $ai->order }}
-                                    </td>
-                                    {{--                                <td class="py-1 px-2 text-center">--}}
+{{--                        <div>--}}
+{{--                            <x-label for="description" value="Description" :required="true" class="pb-2"/>--}}
+{{--                            <textarea class="block mt-1 w-full" name="description">{{ old('description') }}</textarea>--}}
+{{--                        </div>--}}
 
-                                    {{--                                    @if(!empty($ai->path_attachment))--}}
-                                    {{--                                        <a href="{{ \Illuminate\Support\Facades\Storage::url($ai->path_attachment)  }}"  class="inline-flex" target="_blank">--}}
-                                    {{--                                            <img src="https://img.icons8.com/?size=128&id=48139&format=png" alt="Show" class="w-6 h-6">--}}
-                                    {{--                                            <svg data-slot="icon" fill="none"  class="w-6 h-6 mx-auto" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">--}}
-                                    {{--                                                <path stroke-linecap="round" stroke-linejoin="round" d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13"></path>--}}
-                                    {{--                                            </svg>--}}
-                                    {{--                                        </a>--}}
-                                    {{--                                    @endif--}}
+{{--                        <input type="hidden" value="{{ $meeting->id }}" name="meeting_id">--}}
 
-                                    {{--                                </td>--}}
+{{--                        <div>--}}
+{{--                            <x-label for="order" value="{{ __('Order (the order in which the agenda items should be discussed)') }}" />--}}
+{{--                            <select name="order" id="order" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">--}}
+{{--                                @for($i = 1; $i <= 20; $i++)--}}
+{{--                                    <option value="{{ $i }}" @if($i == old('order')) selected @endif>{{ $i }}</option>--}}
+{{--                                @endfor--}}
 
-                                    <td class="py-1 px-2 text-center">
-
-                                        @can('agenda-item-edit')
-                                            <a href="{{ route('meeting.edit', $ai->id) }}" class="inline-flex items-center px-4 py-2 bg-red-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                                Edit
-                                            </a>
-                                        @endcan
-
-                                        @can('agenda-item-view')
-                                            <a href="{{ route('meeting.agenda-item.show', [$meeting->id, $ai->id]) }}" class="inline-flex items-center px-4 py-2 bg-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                                View
-                                            </a>
-                                        @endcan
-
-                                        @can('agenda-item-delete')
-                                            <form action="{{ route('meeting.agenda-item.destroy', [$meeting->id, $ai->id]) }}" method="POST" class="inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Delete</button>
-                                            </form>
-                                        @endcan
-                                    </td>
-                                </tr>
-                                </tbody>
-                            @endforeach
-                        </table>
-                    </div>
-                @endif
+{{--                            </select>--}}
+{{--                        </div>--}}
 
 
-                <form method="POST" action="{{ route('meeting.agenda-item.store', $meeting->id) }}" enctype="multipart/form-data">
-                    <x-status-message class="ml-4 mt-4"/>
-                    <x-validation-errors class="ml-4 mt-4"/>
-                    @csrf
-                    <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4 mt-4 pl-8 pb-4 pt-4 pr-8">
-                        <div>
-                            <x-label for="title" value="Meeting Agenda Title" :required="true"/>
-                            <x-input id="title" name="title" class="block mt-1 w-full" type="text"  value="{{ old('title') }}"/>
-                        </div>
-
-                        <div>
-                            <x-label for="description" value="Description" :required="true" class="pb-2"/>
-                            <textarea class="block mt-1 w-full" name="description">{{ old('description') }}</textarea>
-                        </div>
-
-                        <input type="hidden" value="{{ $meeting->id }}" name="meeting_id">
-
-                        <div>
-                            <x-label for="order" value="{{ __('Order (the order in which the agenda items should be discussed)') }}" />
-                            <select name="order" id="order" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
-                                @for($i = 1; $i <= 20; $i++)
-                                    <option value="{{ $i }}" @if($i == old('order')) selected @endif>{{ $i }}</option>
-                                @endfor
-
-                            </select>
-                        </div>
+{{--                        <div>--}}
+{{--                            <x-label for="path_attachment_file" value="Attachment (PDF, Docx)" :required="true"/>--}}
+{{--                            <x-input id="path_attachment_file" name="path_attachment_file" class="block mt-1 w-full mt-3" type="file"/>--}}
+{{--                        </div>--}}
 
 
-                        <div>
-                            <x-label for="path_attachment_file" value="Attachment (PDF, Docx)" :required="true"/>
-                            <x-input id="path_attachment_file" name="path_attachment_file" class="block mt-1 w-full mt-3" type="file"/>
-                        </div>
-
-
-                        <div class="flex items-center justify-end mt-2">
-                            <x-button class="ml-4 bank-green-bg" id="submit-btn"> {{ __('Add') }} </x-button>
-                        </div>
-                    </div>
-                </form>
+{{--                        <div class="flex items-center justify-end mt-2">--}}
+{{--                            <x-button class="ml-4 bank-green-bg" id="submit-btn"> {{ __('Add') }} </x-button>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </form>--}}
 
 
 
-{{--                <div class="prose max-w-full" style="padding-left: 10px;padding-right: 10px;">--}}
-{{--                    {!! $meeting->description !!}--}}
-{{--                </div>--}}
+                <div class="prose max-w-full" style="padding-left: 10px;padding-right: 10px;">
+                    {!! $agendaItems->description !!}
+                </div>
 
 {{--                    <div style="padding-left: 10px;padding-right: 10px; text-align: center; ">--}}
 

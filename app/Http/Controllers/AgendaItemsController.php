@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAgendaItemsRequest;
 use App\Http\Requests\UpdateAgendaItemsRequest;
 use App\Models\AgendaItems;
+use App\Models\Meeting;
 
 class AgendaItemsController extends Controller
 {
@@ -29,26 +30,31 @@ class AgendaItemsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAgendaItemsRequest $request)
+    public function store(StoreAgendaItemsRequest $request, Meeting $meeting)
     {
         $validated = $request->validate([
             'meeting_id' => 'required|exists:meetings,id',
             'title' => 'required',
             'description' => 'required',
-            'order' => 'required|integer',
+            'order' => 'required',
         ]);
 
-        AgendaItems::create($validated);
-        return redirect()->route('agenda-items.index')->with('success', 'Agenda item created successfully.');
+        if ($request->hasFile('path_attachment_file')) {
+            $file_path = $request->file('path_attachment_file')->store('meeting_agenda_item', 'public');
+            $request->merge(['path_attachment' => $file_path]);
+        }
+        $request->merge(['user_id' => auth()->user()->id]);
+        $agenda_item = AgendaItems::create($request->all());
+        return to_route('meeting.show', $meeting->id)->with('success', 'Agenda item created successfully.');
 
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(AgendaItems $agendaItem)
+    public function show(Meeting $meeting, AgendaItems $agendaItems)
     {
-        return view('agenda-items.show', compact('agendaItem'));
+        return view('agenda-items.show', compact('agendaItems','meeting'));
 
     }
 
@@ -82,10 +88,10 @@ class AgendaItemsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AgendaItems $agendaItems)
+    public function destroy(Meeting $meeting, AgendaItems $agendaItems)
     {
         $agendaItems->delete();
-        return redirect()->route('agenda-items.index')->with('success', 'Agenda item deleted successfully.');
+        return to_route('meeting.show', $meeting->id)->with('success', 'Agenda item has been deleted successfully.');
 
     }
 }

@@ -12,15 +12,18 @@ use Spatie\Permission\Models\Permission;
 
 /*
         Permission::create(['name' => 'meetings-access']);
+        Permission::create(['name' => 'meeting-create']);
         Permission::create(['name' => 'meeting-edit']);
         Permission::create(['name' => 'meeting-view']);
 
         Permission::create(['name' => 'attendance-access']);
+        Permission::create(['name' => 'attendance-create']);
         Permission::create(['name' => 'attendance-show']);
         Permission::create(['name' => 'attendance-edit']);
         Permission::create(['name' => 'attendance-delete']);
 
         Permission::create(['name' => 'meeting-minutes-access']);
+        Permission::create(['name' => 'meeting-minutes-create']);
         Permission::create(['name' => 'meeting-minutes-edit']);
         Permission::create(['name' => 'meeting-minutes-view']);
         Permission::create(['name' => 'meeting-minutes-delete']);
@@ -47,6 +50,17 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::get('/meeting/create',[MeetingController::class, 'create'])->name('meeting.create');
     Route::post('/meeting',[MeetingController::class, 'store'])->name('meeting.store');
     Route::put('/meeting/{meeting}',[MeetingController::class, 'update'])->name('meeting.update');
+    Route::delete('meeting/{meeting}',[MeetingController::class, 'destroy'])->name('meeting.destroy');
+
+
+    // meeting agenda
+    Route::post('/meeting/{meeting}/agenda-item/store',[AgendaItemsController::class, 'store'])->name('meeting.agenda-item.store');
+    Route::delete('/meeting/{meeting}/agenda-item/{agendaItems}',[AgendaItemsController::class, 'destroy'])->name('meeting.agenda-item.destroy');
+    Route::get('/meeting/{meeting}/agenda-item/{agendaItems}/show',[AgendaItemsController::class, 'show'])->name('meeting.agenda-item.show');
+
+
+
+
 
     Route::post('/meeting/{meeting}/comment',[CommentController::class, 'store'])->name('comment.store');
     Route::delete('/meeting/{comment}/destroy',[CommentController::class, 'destroy'])->name('comment.destroy');

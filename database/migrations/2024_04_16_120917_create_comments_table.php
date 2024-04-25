@@ -15,6 +15,7 @@ return new class extends Migration
 //            $table->id();
             $table->uuid('id')->primary();
             $table->foreignUuid('meeting_id')->constrained();
+            $table->foreignUuid('agenda_items_id')->nullable()->constrained();
             $table->string('description');
             $table->string('path_attachment')->nullable();
             $table->softDeletes();

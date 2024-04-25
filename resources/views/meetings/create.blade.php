@@ -112,10 +112,10 @@
                             <textarea class="block mt-1 w-full" name="description">{{ old('description') }}</textarea>
                         </div>
 
-                        <div>
-                            <x-label for="path_attachment_file" value="Attachment (PDF, Docx)" :required="true" />
-                            <x-input id="path_attachment_file" name="path_attachment_file" class="block mt-1 w-full" type="file"/>
-                        </div>
+{{--                        <div>--}}
+{{--                            <x-label for="path_attachment_file" value="Attachment (PDF, Docx)" :required="true" />--}}
+{{--                            <x-input id="path_attachment_file" name="path_attachment_file" class="block mt-1 w-full" type="file"/>--}}
+{{--                        </div>--}}
 
                         <div class="flex items-center justify-end mt-2">
                             <x-button class="ml-4 bank-green-bg" id="submit-btn"> {{ __('Create') }} </x-button>

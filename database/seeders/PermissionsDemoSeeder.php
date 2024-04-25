@@ -21,15 +21,18 @@ class PermissionsDemoSeeder extends Seeder
 
         // create permissions
         Permission::create(['name' => 'meetings-access']);
+        Permission::create(['name' => 'meeting-create']);
         Permission::create(['name' => 'meeting-edit']);
         Permission::create(['name' => 'meeting-view']);
 
         Permission::create(['name' => 'attendance-access']);
+        Permission::create(['name' => 'attendance-create']);
         Permission::create(['name' => 'attendance-show']);
         Permission::create(['name' => 'attendance-edit']);
         Permission::create(['name' => 'attendance-delete']);
 
         Permission::create(['name' => 'meeting-minutes-access']);
+        Permission::create(['name' => 'meeting-minutes-create']);
         Permission::create(['name' => 'meeting-minutes-edit']);
         Permission::create(['name' => 'meeting-minutes-view']);
         Permission::create(['name' => 'meeting-minutes-delete']);

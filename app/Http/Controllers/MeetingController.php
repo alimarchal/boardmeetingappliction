@@ -106,6 +106,8 @@ class MeetingController extends Controller implements HasMiddleware
      */
     public function destroy(Meeting $meeting)
     {
-        //
+        $meeting->delete();
+        session()->flash('success', 'Your meeting record has been successfully deleted.');
+        return to_route('meeting.index');
     }
 }

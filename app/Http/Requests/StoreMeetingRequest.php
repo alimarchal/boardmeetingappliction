@@ -27,7 +27,7 @@ class StoreMeetingRequest extends FormRequest
             'date_and_time' => 'required',
             'location' => 'required',
             'description' => 'required',
-            'path_attachment_file' => 'required|mimes:pdf,jpg,jpeg,png,doc,docx',
+            'path_attachment_file' => 'mimes:pdf,jpg,jpeg,png,doc,docx',
         ];
     }
 
@@ -37,7 +37,6 @@ class StoreMeetingRequest extends FormRequest
         return [
             'title.required' => 'Meeting title is required.',
             'description.required' => 'Meeting description is required.',
-            'path_attachment_file.required' => 'Attachment is required.',
             'path_attachment_file.mimes' => 'Invalid file format. Allowed formats are PDF, JPG, JPEG, PNG, DOC, and DOCX.',
         ];
     }
