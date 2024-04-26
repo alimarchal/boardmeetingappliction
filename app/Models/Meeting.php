@@ -16,10 +16,7 @@ class Meeting extends Model
 
     protected $fillable = ['id', 'title', 'me_id','user_id', 'description', 'path_attachment', 'date_and_time', 'location', 'status'];
 
-    public function comments(): HasMany
-    {
-        return $this->hasMany(Comment::class);
-    }
+
 
     public function getSlugAttribute()
     {

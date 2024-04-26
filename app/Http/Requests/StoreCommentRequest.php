@@ -23,8 +23,8 @@ class StoreCommentRequest extends FormRequest
     {
         return [
             //
-            'description' => 'required',
-            'path_attachment_file' => 'required|mimes:pdf,jpg,jpeg,png,doc,docx',
+//            'description' => 'required',
+//            'path_attachment_file' => 'required|mimes:pdf,jpg,jpeg,png,doc,docx',
         ];
     }
 
@@ -32,9 +32,9 @@ class StoreCommentRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'description.required' => 'Meeting description is required.',
-            'path_attachment_file.required' => 'Attachment is required.',
-            'path_attachment_file.mimes' => 'Invalid file format. Allowed formats are PDF, JPG, JPEG, PNG, DOC, and DOCX.',
+//            'description.required' => 'Meeting description is required.',
+//            'path_attachment_file.required' => 'Attachment is required.',
+//            'path_attachment_file.mimes' => 'Invalid file format. Allowed formats are PDF, JPG, JPEG, PNG, DOC, and DOCX.',
         ];
     }
 }

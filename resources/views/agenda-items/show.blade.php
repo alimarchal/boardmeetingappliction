@@ -82,6 +82,11 @@
 
         <div class="flex justify-center items-center float-right">
 
+            <a href="{{ route('meeting.show', $meeting->id) }}" class="inline-flex items-center px-4 py-2 bg-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                Back
+            </a>
+
+
             <a href="javascript:;" id="toggle" onclick="window.print()"
                class="flex items-center px-3 py-2 text-gray-600 bg-white border rounded-lg focus:outline-none hover:bg-gray-100 transition-colors duration-200 transform dark:text-gray-200 dark:border-gray-200  dark:hover:bg-gray-700 ml-2"
                title="Members List">
@@ -102,24 +107,6 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden  sm:rounded-lg pt-4 pb-2 ">
 
-                <table style="margin: 0px;">
-                    <tr>
-                        <td style="width: 33.33%">
-                            <div style="float: left; margin-left: 10%">
-                                @php $test_report_data = $meeting->slug . ' Board Meeting '. "\n". $meeting->id . "\n" . \Carbon\Carbon::parse($meeting->date_and_time)->format('d-M-Y H:i:s') ; @endphp
-                                {!! DNS2D::getBarcodeSVG($test_report_data, 'QRCODE',3,3) !!}
-                            </div>
-                        </td>
-                        <td style="width: 33.33%">
-                            <img src="{{ url('images/logo.png') }}" alt="Logo" style="margin:auto; height: 100px;">
-                        </td>
-                        <td style="width: 33.33%; text-align: center;">
-                            <div style="margin: auto; margin-left: 30%">
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-
                 <table style="margin-top: 10px; font-size:18px; line-height: 1.2; text-align: center; font-weight: bold;">
                     <tbody>
                     <tr>
@@ -131,7 +118,7 @@
                             <br>
                             <span style="font-size: 14px;">MUID: {{ $meeting->id }}</span>
                             <br>
-                            Item: {{ $agendaItems->order }}  - {{ $agendaItems->title }}
+                            Agenda Item: {{ $agendaItems->order }}  - {{ $agendaItems->title }}
                             {{--                                        Created At :: {{ \Carbon\Carbon::parse($meeting->created_at)->format('d-m-Y H:i:s a') }}--}}
                         </td>
                     </tr>
@@ -142,151 +129,87 @@
 
 
                 <hr class="mb-1 mt-1">
-
-{{--                <form method="POST" action="{{ route('meeting.agenda-item.store', $meeting->id) }}" enctype="multipart/form-data">--}}
-{{--                    <x-status-message class="ml-4 mt-4"/>--}}
-{{--                    <x-validation-errors class="ml-4 mt-4"/>--}}
-{{--                    @csrf--}}
-{{--                    <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4 mt-4 pl-8 pb-4 pt-4 pr-8">--}}
-{{--                        <div>--}}
-{{--                            <x-label for="title" value="Meeting Agenda Title" :required="true"/>--}}
-{{--                            <x-input id="title" name="title" class="block mt-1 w-full" type="text"  value="{{ old('title') }}"/>--}}
-{{--                        </div>--}}
-
-{{--                        <div>--}}
-{{--                            <x-label for="description" value="Description" :required="true" class="pb-2"/>--}}
-{{--                            <textarea class="block mt-1 w-full" name="description">{{ old('description') }}</textarea>--}}
-{{--                        </div>--}}
-
-{{--                        <input type="hidden" value="{{ $meeting->id }}" name="meeting_id">--}}
-
-{{--                        <div>--}}
-{{--                            <x-label for="order" value="{{ __('Order (the order in which the agenda items should be discussed)') }}" />--}}
-{{--                            <select name="order" id="order" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">--}}
-{{--                                @for($i = 1; $i <= 20; $i++)--}}
-{{--                                    <option value="{{ $i }}" @if($i == old('order')) selected @endif>{{ $i }}</option>--}}
-{{--                                @endfor--}}
-
-{{--                            </select>--}}
-{{--                        </div>--}}
-
-
-{{--                        <div>--}}
-{{--                            <x-label for="path_attachment_file" value="Attachment (PDF, Docx)" :required="true"/>--}}
-{{--                            <x-input id="path_attachment_file" name="path_attachment_file" class="block mt-1 w-full mt-3" type="file"/>--}}
-{{--                        </div>--}}
-
-
-{{--                        <div class="flex items-center justify-end mt-2">--}}
-{{--                            <x-button class="ml-4 bank-green-bg" id="submit-btn"> {{ __('Add') }} </x-button>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </form>--}}
-
-
-
-                <div class="prose max-w-full" style="padding-left: 10px;padding-right: 10px;">
+                <div class="prose max-w-full" style="margin-top: 10px;padding-left: 10px;padding-right: 10px;">
                     {!! $agendaItems->description !!}
                 </div>
 
-{{--                    <div style="padding-left: 10px;padding-right: 10px; text-align: center; ">--}}
-
-{{--                        @if(!empty($meeting->path_attachment))--}}
-{{--                        <a href="{{ \Illuminate\Support\Facades\Storage::url($meeting->path_attachment)  }}"--}}
-{{--                           class="text-red-700 inline-flex border-1 border-blue-500" target="_blank">--}}
-{{--                            --}}{{----}}{{--                                            <img src="https://img.icons8.com/?size=160&id=115364&format=png"--}}
-{{--                            --}}{{----}}{{--                                                 alt="Attachment" class="w-12 h-12 mx-auto" >--}}
-{{--                            <x-label value="Meeting Attachment View / Download" style="font-size: 16px; font-weight: bold; color: red " class="pb-2 font-extrabold text-blue-300 hover:underline"/>--}}
-{{--                        </a>--}}
-{{--                        <div>--}}
-{{--                            @else--}}
-{{--                                #N/A--}}
-{{--                            @endif--}}
-
-{{--                            <form method="POST" action="{{ route('comment.store', $meeting->id) }}" enctype="multipart/form-data" class="print:hidden">--}}
-{{--                                @csrf--}}
-{{--                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-4 pl-8 pb-4 pt-4 pr-8">--}}
-{{--                                    <div>--}}
-{{--                                        <x-label for="description" value="Description" :required="true"/>--}}
-{{--                                        <x-input id="description" name="description" class="block mt-1 w-full" type="text" required value="{{ old('title') }}"/>--}}
-{{--                                    </div>--}}
-
-{{--                                    <div>--}}
-{{--                                        <x-label for="path_attachment_file" value="Attachment (PDF, Docx)" :required="true"/>--}}
-{{--                                        <x-input id="path_attachment_file" name="path_attachment_file" class="block mt-1 w-full mt-3" type="file"/>--}}
-{{--                                    </div>--}}
-{{--                                    <div>--}}
-
-{{--                                    </div>--}}
-
-{{--                                    <div class="flex items-center justify-end mt-2">--}}
-{{--                                        <x-button class="ml-4 bank-green-bg" id="submit-btn"> {{ __('Add') }} </x-button>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </form>--}}
-
-{{--                            <hr>--}}
-{{--                            @if($meeting->comments->isNotEmpty())--}}
-{{--                                <table style="margin-top: 10px; font-size:14px;text-align: center; border: 1px solid black;">--}}
-{{--                                    <tbody>--}}
-{{--                                    <tr>--}}
-{{--                                        <td colspan="3" style="border: 1px solid black;font-size:18px;font-weight: bold; " class="py-2">--}}
-{{--                                            Annexure / Other Documents--}}
-{{--                                        </td>--}}
-{{--                                    </tr>--}}
-
-{{--                                    <tr>--}}
-{{--                                        <td style="border: 1px solid black; " class="py-2 font-bold">--}}
-{{--                                            Description--}}
-{{--                                        </td>--}}
-{{--                                        <td style="border: 1px solid black; " class="py-2 font-bold">--}}
-{{--                                            Attachment--}}
-{{--                                        </td>--}}
-{{--                                        @can('meeting-edit')--}}
-{{--                                            <td style="border: 1px solid black; " class="py-2 font-bold">--}}
-{{--                                                Action--}}
-{{--                                            </td>--}}
-{{--                                        @endcan--}}
-{{--                                    </tr>--}}
 
 
-{{--                                    @foreach($meeting->comments->sortBy('created_at') as $cmt)--}}
-{{--                                        <tr>--}}
-{{--                                            <td style="border: 1px solid black;">--}}
-{{--                                                {{ $cmt->description }}--}}
-{{--                                            </td>--}}
-{{--                                            <td class="text-center" style="border: 1px solid black;">--}}
-{{--                                                <a href="{{ \Illuminate\Support\Facades\Storage::url($cmt->path_attachment) }}" class="inline-flex " target="_blank">--}}
-{{--                                                    <img--}}
-{{--                                                        src="https://img.icons8.com/?size=128&id=43996&format=png"--}}
-{{--                                                        alt="download" class="w-8 h-8">--}}
+                @if($agendaItems->comments->isNotEmpty())
+                    <h2 class="text-2xl text-center mb-2 font-bold text-black ">Meeting Agenda Attachments / Documents</h2>
+                    <div class="relative overflow-x-auto ">
 
-{{--                                                </a>--}}
-{{--                                            </td>--}}
+                        <x-status-message class="ml-4 mt-4"/>
+                        <x-validation-errors class="ml-4 mt-4"/>
 
-{{--                                            @can('meeting-edit')--}}
-{{--                                                <td class="text-center" style="border: 1px solid black;">--}}
-{{--                                                    <form action="{{ route('comment.destroy', $cmt->id) }}" method="post" class="inline">--}}
-{{--                                                        @csrf--}}
-{{--                                                        @method('DELETE')--}}
-{{--                                                        <button type="submit"--}}
-{{--                                                                class="inline-flex items-center px-4 py-2 bg-red-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">--}}
-{{--                                                            Delete--}}
-{{--                                                            --}}{{--                                                        <img src="https://img.icons8.com/?size=160&id=102350&format=png" alt=""  class="w-8 h-8">--}}
+                        <table class="min-w-max w-full table-auto">
+                            <thead>
+                            <tr class="bg-gray-200 text-white  uppercase text-sm" style="background-color: #f78f1e;">
+                                <th class="py-2 px-2 text-center">ID</th>
+                                <th class="py-2 px-2 text-center">Title</th>
+                                <th class="py-2 px-2 text-center">Attachment</th>
+                                <th class="py-2 px-2 text-center print:hidden">Action</th>
+                            </tr>
+                            </thead>
+                            @foreach($agendaItems->comments->sortBy('created_at') as $cmt)
+                                <tbody class="text-black text-sm leading-normal ">
+                                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                    <td class="py-1 px-2 text-center">
+                                        {{ $loop->iteration }}
+                                    </td>
+                                    <td class="py-1 px-2 text-center">
+                                        {{ $cmt->description }}
+                                    </td>
+                                    <td class="py-1 px-2 text-center">
 
-{{--                                                        </button>--}}
-{{--                                                    </form>--}}
-{{--                                                </td>--}}
-{{--                                            @endcan--}}
-{{--                                        </tr>--}}
+                                        @if(!empty($cmt->path_attachment))
+                                            <a href="{{ \Illuminate\Support\Facades\Storage::url($cmt->path_attachment)  }}"  class="inline-flex" target="_blank">
+{{--                                                <img src="https://img.icons8.com/?size=128&id=48139&format=png" alt="Show" class="w-6 h-6">--}}
+                                                <svg data-slot="icon" fill="none"  class="w-6 h-6 mx-auto" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13"></path>
+                                                </svg>
+                                            </a>
+                                        @endif
 
-{{--                                    @endforeach--}}
-{{--                                    </tbody>--}}
-{{--                                </table>--}}
-{{--                            @endif--}}
+                                    </td>
 
-{{--                        </div>--}}
-{{--                    </div>--}}
+                                    <td class="py-1 px-2 text-center print:hidden">
+
+                                        @can('agenda-item-delete')
+                                            <form action="{{ route('meeting.agendaItem.comment.destroy', [$agendaItems->id, $cmt->id]) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Delete</button>
+                                            </form>
+                                        @endcan
+                                    </td>
+                                </tr>
+                                </tbody>
+                            @endforeach
+                        </table>
+                    </div>
+                @endif
+
+
+                <form method="POST" action="{{ route('meeting.agendaItem.comment.store', [$meeting->id, $agendaItems->id]) }}" enctype="multipart/form-data" class="print:hidden">
+                    @csrf
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-4 pl-8 pb-4 pt-4 pr-8">
+                        <div>
+                            <x-label for="description" value="Description" :required="true"/>
+                            <x-input id="description" name="description" class="block mt-1 w-full" type="text" required value="{{ old('title') }}"/>
+                        </div>
+
+                        <div>
+                            <x-label for="path_attachment_file" value="Attachment (PDF, Docx)" :required="true"/>
+                            <x-input id="path_attachment_file" name="path_attachment_file" class="block mt-1 w-full mt-3" type="file"/>
+                        </div>
+
+                        </div>
+
+                        <div class="flex items-center justify-end mt-2 mr-2 mb-2">
+                            <x-button class="ml-4 bank-green-bg" id="submit-btn"> {{ __('Add') }} </x-button>
+                        </div>
+                </form>
 
 
             </div>

@@ -26,4 +26,8 @@ class AgendaItems extends Model
     {
         return $this->belongsTo(Meeting::class);
     }
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class,'agenda_items_id');
+    }
 }

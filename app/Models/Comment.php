@@ -17,7 +17,7 @@ class Comment extends Model
 
 
 
-    protected $fillable = ['id','meeting_id','description','path_attachment','deleted_at'];
+    protected $fillable = ['id','meeting_id','description','agenda_items_id','path_attachment','deleted_at'];
 
     public function meeting(): BelongsTo
     {

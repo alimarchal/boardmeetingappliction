@@ -52,18 +52,13 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::put('/meeting/{meeting}',[MeetingController::class, 'update'])->name('meeting.update');
     Route::delete('meeting/{meeting}',[MeetingController::class, 'destroy'])->name('meeting.destroy');
 
-
-    // meeting agenda
     Route::post('/meeting/{meeting}/agenda-item/store',[AgendaItemsController::class, 'store'])->name('meeting.agenda-item.store');
-    Route::delete('/meeting/{meeting}/agenda-item/{agendaItems}',[AgendaItemsController::class, 'destroy'])->name('meeting.agenda-item.destroy');
     Route::get('/meeting/{meeting}/agenda-item/{agendaItems}/show',[AgendaItemsController::class, 'show'])->name('meeting.agenda-item.show');
+    Route::delete('/meeting/{meeting}/agenda-item/{agendaItems}',[AgendaItemsController::class, 'destroy'])->name('meeting.agenda-item.destroy');
 
+    Route::post('/meeting/{meeting}/agenda-item/{agendaItems}/store',[CommentController::class, 'store'])->name('meeting.agendaItem.comment.store');
+    Route::delete('/agenda-item/{agendaItems}/comment/{comment}/destroy',[CommentController::class, 'destroy'])->name('meeting.agendaItem.comment.destroy');
 
-
-
-
-    Route::post('/meeting/{meeting}/comment',[CommentController::class, 'store'])->name('comment.store');
-    Route::delete('/meeting/{comment}/destroy',[CommentController::class, 'destroy'])->name('comment.destroy');
 
     Route::resource('attendance', AttendanceController::class);
 

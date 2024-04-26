@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
+use App\Models\AgendaItems;
 use App\Models\Comment;
 use App\Models\Meeting;
 
@@ -28,19 +29,20 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCommentRequest $request, Meeting $meeting)
+    public function store(StoreCommentRequest $request, Meeting $meeting,  AgendaItems $agendaItems)
     {
         if ($request->hasFile('path_attachment_file')) {
             $profile_path = $request->file('path_attachment_file')->store('meeting_main_attachment', 'public');
             $request->merge(['path_attachment' => $profile_path]);
         }
         $request->merge(['meeting_id' => $meeting->id]);
+        $request->merge(['agenda_items_id' => $agendaItems->id]);
         $request->merge(['user_id' => auth()->user()->id]);
 
         $comment = Comment::create($request->all());
         session()->flash('success', 'Your attachment has been successfully added to this meeting...');
 
-        return to_route('meeting.show', $meeting->id);
+        return to_route('meeting.agenda-item.show', [ $meeting->id, $agendaItems->id]);
     }
 
     /**
@@ -70,12 +72,11 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Comment $comment)
+    public function destroy(AgendaItems $agendaItems, Comment $comment)
     {
-        $meeting_id = $comment->meeting_id;
         $comment->delete();
         session()->flash('success', 'Your attachment has been successfully deleted...');
 
-        return to_route('meeting.show', $meeting_id);
+        return to_route('meeting.agenda-item.show', [$agendaItems->meeting_id,$agendaItems->id]);
     }
 }

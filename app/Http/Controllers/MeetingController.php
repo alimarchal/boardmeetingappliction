@@ -32,14 +32,14 @@ class MeetingController extends Controller implements HasMiddleware
         if (Auth::user()->hasRole(['Super-Admin', 'Company Secretary'])) {
             $meetings = QueryBuilder::for(Meeting::class)
                 ->allowedFilters(['id', 'title', 'description', 'path_attachment'])
-                ->with('comments')
+//                ->with('comments')
                 ->orderByDesc('id')
                 ->get();
         } else {
             $meetings = QueryBuilder::for(Meeting::class)
                 ->allowedFilters(['id', 'title', 'description', 'path_attachment'])
                 ->where('status','Unlock')
-                ->with('comments')
+//                ->with('comments')
                 ->orderByDesc('id')
                 ->get();
         }
