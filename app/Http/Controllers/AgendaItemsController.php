@@ -61,27 +61,26 @@ class AgendaItemsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AgendaItems $agendaItems)
+    public function edit(Meeting $meeting, AgendaItems $agendaItems)
     {
-        $meetings = Meeting::all();
-        return view('agenda-items.edit', compact('agendaItem', 'meetings'));
-
+        return view('agenda-items.edit', compact('agendaItems', 'meeting'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAgendaItemsRequest $request, AgendaItems $agendaItems)
+    public function update(UpdateAgendaItemsRequest $request, Meeting $meeting, AgendaItems $agendaItems)
     {
         $validated = $request->validate([
-            'meeting_id' => 'required|exists:meetings,id',
             'title' => 'required',
             'description' => 'required',
             'order' => 'required|integer',
         ]);
 
-        $agendaItems->update($validated);
-        return redirect()->route('agenda-items.index')->with('success', 'Agenda item updated successfully.');
+        $request->merge(['user_id' => auth()->user()->id]);
+        $agendaItems->update($request->all());
+
+        return to_route('meeting.agenda-item.show',[$agendaItems->meeting_id, $agendaItems->id])->with('success', 'Agenda item updated successfully.');
 
     }
 

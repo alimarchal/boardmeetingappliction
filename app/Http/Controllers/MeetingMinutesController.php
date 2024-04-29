@@ -45,6 +45,10 @@ class MeetingMinutesController extends Controller implements HasMiddleware
     public function store(StoreMeetingMinutesRequest $request)
     {
 
+        if ($request->hasFile('path_attachment_file')) {
+            $file_path = $request->file('path_attachment_file')->store('minutes_of_meeting', 'public');
+            $request->merge(['path_attachment' => $file_path]);
+        }
         $request->merge(['user_id' => auth()->user()->id]);
         MeetingMinutes::create($request->all());
         return redirect()->route('meeting-minutes.index')->with('success', 'Meeting minutes created successfully.');

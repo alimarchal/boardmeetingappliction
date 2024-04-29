@@ -17,6 +17,7 @@ class MeetingMinutes extends Model
         'meeting_id',
         'user_id',
         'content',
+        'path_attachment',
         'deleted_at',
     ];
 

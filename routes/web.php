@@ -9,17 +9,24 @@ use App\Http\Controllers\MeetingMinutesController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Permission;
-
 /*
         Permission::create(['name' => 'meetings-access']);
+        Permission::create(['name' => 'meeting-delete']);
         Permission::create(['name' => 'meeting-create']);
         Permission::create(['name' => 'meeting-edit']);
         Permission::create(['name' => 'meeting-view']);
 
+        Permission::create(['name' => 'agenda-item-access']);
+        Permission::create(['name' => 'agenda-item-create']);
+        Permission::create(['name' => 'agenda-item-add-attachment']);
+        Permission::create(['name' => 'agenda-item-edit']);
+        Permission::create(['name' => 'agenda-item-view']);
+        Permission::create(['name' => 'agenda-item-delete']);
+
         Permission::create(['name' => 'attendance-access']);
         Permission::create(['name' => 'attendance-create']);
-        Permission::create(['name' => 'attendance-show']);
         Permission::create(['name' => 'attendance-edit']);
+        Permission::create(['name' => 'attendance-view']);
         Permission::create(['name' => 'attendance-delete']);
 
         Permission::create(['name' => 'meeting-minutes-access']);
@@ -34,9 +41,8 @@ use Spatie\Permission\Models\Permission;
         Permission::create(['name' => 'users-view']);
         app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
  */
+
 Route::get('/', function () {
-
-
     return to_route('login');
 });
 
@@ -54,6 +60,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
     Route::post('/meeting/{meeting}/agenda-item/store',[AgendaItemsController::class, 'store'])->name('meeting.agenda-item.store');
     Route::get('/meeting/{meeting}/agenda-item/{agendaItems}/show',[AgendaItemsController::class, 'show'])->name('meeting.agenda-item.show');
+    Route::get('/meeting/{meeting}/agenda-item/{agendaItems}/edit',[AgendaItemsController::class, 'edit'])->name('meeting.agenda-item.edit');
+    Route::put('/meeting/{meeting}/agenda-item/{agendaItems}/update',[AgendaItemsController::class, 'update'])->name('meeting.agenda-item.update');
     Route::delete('/meeting/{meeting}/agenda-item/{agendaItems}',[AgendaItemsController::class, 'destroy'])->name('meeting.agenda-item.destroy');
 
     Route::post('/meeting/{meeting}/agenda-item/{agendaItems}/store',[CommentController::class, 'store'])->name('meeting.agendaItem.comment.store');

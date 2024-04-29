@@ -22,7 +22,7 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <x-status-message class="ml-4 mt-4"/>
                     <x-validation-errors class="ml-4 mt-4"/>
-                    <form method="POST" action="{{ route('meeting-minutes.store') }}">
+                    <form method="POST" action="{{ route('meeting-minutes.store') }}" enctype="multipart/form-data" >
                         @csrf
                         <div>
                             <x-label for="meeting_id" value="{{ __('Meeting') }}" />
@@ -39,6 +39,12 @@
                         <div class="mt-4">
                             <x-label for="content" value="Minutes" :required="true" class="pb-2"/>
                             <textarea class="block mt-1 w-full" name="content">{{ old('content') }}</textarea>
+                        </div>
+
+
+                        <div class="mt-4">
+                            <x-label for="path_attachment_file" value="Attachment (PDF, Docx)" :required="true"/>
+                            <x-input id="path_attachment_file" name="path_attachment_file" class="block mt-1 w-full mt-3" type="file"/>
                         </div>
 
 

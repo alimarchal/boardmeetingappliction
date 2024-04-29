@@ -25,6 +25,7 @@
                             <thead>
                             <tr class="bg-gray-200 text-white bank-green-bg uppercase text-sm" >
                                 <th class="py-2 px-2 text-center">Meeting</th>
+                                <th class="py-2 px-2 text-center">Attachment</th>
                                 <th class="py-2 px-2 text-center">Created At</th>
                                 <th class="py-2 px-2 text-center">Actions</th>
                             </tr>
@@ -33,8 +34,22 @@
                                 <tbody class="text-black text-md leading-normal ">
                                 <tr class="border-b border-gray-200 hover:bg-gray-100">
                                     <td class="py-1 px-2 text-center">
-                                        {{ $mm->meeting->title }}
+                                        {{ $mm->meeting?->title }}
                                     </td>
+
+                                    <td class="py-1 px-2 text-center">
+
+                                        @if(!empty($mm->path_attachment))
+                                            <a href="{{ \Illuminate\Support\Facades\Storage::url($mm->path_attachment)  }}"  class="inline-flex" target="_blank">
+                                                <img src="https://img.icons8.com/?size=128&id=48139&format=png" alt="Show" class="w-6 h-6">
+{{--                                                <svg data-slot="icon" fill="none"  class="w-6 h-6 mx-auto" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">--}}
+{{--                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13"></path>--}}
+{{--                                                </svg>--}}
+                                            </a>
+                                        @endif
+
+                                    </td>
+
                                     <td class="py-1 px-2 text-center">
                                         {{ $mm->created_at->format('Y-m-d H:i:s') }}
                                     </td>

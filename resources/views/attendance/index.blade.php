@@ -32,7 +32,7 @@
                                 <tbody class="text-black text-md leading-normal ">
                                 <tr class="border-b border-gray-200 hover:bg-gray-100">
                                     <td class="py-1 px-2 text-center">
-                                        {{ $at->meeting->slug }}
+                                        {{ $at->meeting?->slug }}
                                     </td>
                                     <td class="py-1 px-2 text-center">
                                         {{ $at->user->name }}

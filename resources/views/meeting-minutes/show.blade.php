@@ -22,6 +22,21 @@
                             <h3 class="text-lg font-medium text-gray-900">Created At</h3>
                             <p class="mt-1 text-gray-600">{{ $meetingMinutes->created_at->format('Y-m-d H:i:s') }}</p>
                         </div>
+
+                        @if(!empty($meetingMinutes->path_attachment))
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900">Attachment</h3>
+                            <p class="mt-1 text-gray-600">
+                                @if(!empty($meetingMinutes->path_attachment))
+                                    <a href="{{ \Illuminate\Support\Facades\Storage::url($meetingMinutes->path_attachment)  }}"  class="inline-flex" target="_blank">
+                                        <img src="https://img.icons8.com/?size=128&id=48139&format=png" alt="Show" class="w-6 h-6">
+                                    </a>
+                                @endif
+                            </p>
+                        </div>
+                        @endif
+
+
                         <div>
                             <h3 class="text-lg font-medium text-gray-900">Updated At</h3>
                             <p class="mt-1 text-gray-600">{{ $meetingMinutes->updated_at->format('Y-m-d H:i:s') }}</p>

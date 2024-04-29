@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignUuid('meeting_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->text('content');
+            $table->string('path_attachment')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

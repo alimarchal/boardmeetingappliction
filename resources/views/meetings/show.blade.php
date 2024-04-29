@@ -82,7 +82,8 @@
 
         <div class="flex justify-center items-center float-right">
 
-            <a href="{{ route('meeting.index') }}" class="inline-flex items-center px-4 py-2 bg-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+            <a href="{{ route('meeting.index') }}"
+               class="inline-flex items-center px-4 py-2 bg-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                 Back
             </a>
 
@@ -141,16 +142,13 @@
                 </table>
 
 
-
-
-                <hr class="mb-1 mt-1">
-
                 @if($meeting->agenda_items->isNotEmpty())
-                    <h1 class="text-2xl text-center mb-2 mt-1 font-bold">Meeting Agendas</h1>
+                    <hr class="mb-0 mt-1">
+                    {{--                    <h1 class="text-2xl text-center mb-2 mt-1 font-bold">Meeting Agendas</h1>--}}
                     <div class="relative overflow-x-auto ">
                         <table class="min-w-max w-full table-auto">
                             <thead>
-                            <tr class="bg-gray-200 text-white bank-green-bg uppercase text-sm" >
+                            <tr class="bg-gray-200 text-white bank-green-bg uppercase text-sm">
                                 <th class="py-2 px-2 text-center">ID</th>
                                 <th class="py-2 px-2 text-center">Agenda Title</th>
                                 {{--                            <th class="py-2 px-2 text-center">Attachment</th>--}}
@@ -175,8 +173,16 @@
 
                                     <td class="py-1 px-2 text-center print:hidden">
 
+                                        @can('agenda-item-edit')
+                                            <a href="{{ route('meeting.agenda-item.edit', [$meeting->id, $ai->id]) }}"
+                                               class="inline-flex items-center px-4 py-2 bg-red-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                                Edit
+                                            </a>
+                                        @endcan
+
                                         @can('agenda-item-view')
-                                            <a href="{{ route('meeting.agenda-item.show', [$meeting->id, $ai->id]) }}" class="inline-flex items-center px-4 py-2 bg-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                            <a href="{{ route('meeting.agenda-item.show', [$meeting->id, $ai->id]) }}"
+                                               class="inline-flex items-center px-4 py-2 bg-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                                 View
                                             </a>
                                         @endcan
@@ -185,7 +191,10 @@
                                             <form action="{{ route('meeting.agenda-item.destroy', [$meeting->id, $ai->id]) }}" method="POST" class="inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Delete</button>
+                                                <button type="submit"
+                                                        class="inline-flex items-center px-4 py-2 bg-red-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                                    Delete
+                                                </button>
                                             </form>
                                         @endcan
                                     </td>
@@ -196,40 +205,41 @@
                     </div>
                 @endif
 
+                @can('agenda-item-create')
+                    <form method="POST" action="{{ route('meeting.agenda-item.store', $meeting->id) }}" enctype="multipart/form-data" class="print:hidden">
+                        <x-status-message class="ml-4 mt-4"/>
+                        <x-validation-errors class="ml-4 mt-4"/>
+                        @csrf
+                        <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4 mt-4 pl-8 pb-4 pt-4 pr-8">
+                            <div>
+                                <x-label for="title" value="Meeting Agenda Title" :required="true"/>
+                                <x-input id="title" name="title" class="block mt-1 w-full" type="text" value="{{ old('title') }}"/>
+                            </div>
 
-                <form method="POST" action="{{ route('meeting.agenda-item.store', $meeting->id) }}" enctype="multipart/form-data" class="print:hidden">
-                    <x-status-message class="ml-4 mt-4"/>
-                    <x-validation-errors class="ml-4 mt-4"/>
-                    @csrf
-                    <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4 mt-4 pl-8 pb-4 pt-4 pr-8">
-                        <div>
-                            <x-label for="title" value="Meeting Agenda Title" :required="true"/>
-                            <x-input id="title" name="title" class="block mt-1 w-full" type="text"  value="{{ old('title') }}"/>
+                            <div>
+                                <x-label for="description" value="Description" :required="true" class="pb-2"/>
+                                <textarea class="block mt-1 w-full" name="description">{{ old('description') }}</textarea>
+                            </div>
+
+                            <input type="hidden" value="{{ $meeting->id }}" name="meeting_id">
+
+                            <div>
+                                <x-label for="order" value="{{ __('Order (the order in which the agenda items should be discussed)') }}"/>
+                                <select name="order" id="order"
+                                        class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+                                    @for($i = 1; $i <= 20; $i++)
+                                        <option value="{{ $i }}" @if($i == old('order')) selected @endif>{{ $i }}</option>
+                                    @endfor
+
+                                </select>
+                            </div>
+
+                            <div class="flex items-center justify-end mt-2">
+                                <x-button class="ml-4 bank-green-bg" id="submit-btn"> {{ __('Add') }} </x-button>
+                            </div>
                         </div>
-
-                        <div>
-                            <x-label for="description" value="Description" :required="true" class="pb-2"/>
-                            <textarea class="block mt-1 w-full" name="description">{{ old('description') }}</textarea>
-                        </div>
-
-                        <input type="hidden" value="{{ $meeting->id }}" name="meeting_id">
-
-                        <div>
-                            <x-label for="order" value="{{ __('Order (the order in which the agenda items should be discussed)') }}" />
-                            <select name="order" id="order" class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
-                                @for($i = 1; $i <= 20; $i++)
-                                    <option value="{{ $i }}" @if($i == old('order')) selected @endif>{{ $i }}</option>
-                                @endfor
-
-                            </select>
-                        </div>
-
-                        <div class="flex items-center justify-end mt-2">
-                            <x-button class="ml-4 bank-green-bg" id="submit-btn"> {{ __('Add') }} </x-button>
-                        </div>
-                    </div>
-                </form>
-
+                    </form>
+                @endcan
             </div>
         </div>
     </div>

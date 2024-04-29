@@ -34,7 +34,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::authenticateUsing(function (Request $request) {
             $user = User::where('email', $request->email)->first();
             if ($user && Hash::check($request->password, $user->password)) {
-                if (!$user->status) { throw ValidationException::withMessages(['email' => 'Contact the Company Secretary to activate your account.']); }
+                if ($user->status == "inactive") { throw ValidationException::withMessages(['email' => 'Contact the Company Secretary to activate your account.']); }
                 return $user;
             }
         });

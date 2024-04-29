@@ -103,9 +103,9 @@
         </div>
 
     </x-slot>
-    <div class="py-1">
+    <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden  sm:rounded-lg pt-4 pb-2 ">
+            <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg pt-4 pb-2 ">
 
                 <table style="margin-top: 10px; font-size:18px; line-height: 1.2; text-align: center; font-weight: bold;">
                     <tbody>
@@ -136,7 +136,7 @@
 
 
                 @if($agendaItems->comments->isNotEmpty())
-                    <h2 class="text-2xl text-center mb-2 font-bold text-black ">Meeting Agenda Attachments / Documents</h2>
+                    <h2 class="text-2xl text-center mb-4 mt-4 font-bold text-black ">Meeting Agenda Attachments / Documents</h2>
                     <div class="relative overflow-x-auto ">
 
                         <x-status-message class="ml-4 mt-4"/>
@@ -191,25 +191,28 @@
                 @endif
 
 
-                <form method="POST" action="{{ route('meeting.agendaItem.comment.store', [$meeting->id, $agendaItems->id]) }}" enctype="multipart/form-data" class="print:hidden">
-                    @csrf
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-4 pl-8 pb-4 pt-4 pr-8">
-                        <div>
-                            <x-label for="description" value="Description" :required="true"/>
-                            <x-input id="description" name="description" class="block mt-1 w-full" type="text" required value="{{ old('title') }}"/>
-                        </div>
+                @can('agenda-item-add-attachment')
+                    <form method="POST" action="{{ route('meeting.agendaItem.comment.store', [$meeting->id, $agendaItems->id]) }}" enctype="multipart/form-data" class="print:hidden">
+                        @csrf
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-4 pl-8 pb-4 pt-4 pr-8">
+                            <div>
+                                <x-label for="description" value="Description" :required="true"/>
+                                <x-input id="description" name="description" class="block mt-1 w-full" type="text" required value="{{ old('title') }}"/>
+                            </div>
 
-                        <div>
-                            <x-label for="path_attachment_file" value="Attachment (PDF, Docx)" :required="true"/>
-                            <x-input id="path_attachment_file" name="path_attachment_file" class="block mt-1 w-full mt-3" type="file"/>
-                        </div>
+                            <div>
+                                <x-label for="path_attachment_file" value="Attachment (PDF, Docx)" :required="true"/>
+                                <x-input id="path_attachment_file" name="path_attachment_file" class="block mt-1 w-full mt-3" type="file"/>
+                            </div>
 
                         </div>
 
                         <div class="flex items-center justify-end mt-2 mr-2 mb-2">
                             <x-button class="ml-4 bank-green-bg" id="submit-btn"> {{ __('Add') }} </x-button>
                         </div>
-                </form>
+                    </form>
+                @endcan
+
 
 
             </div>
