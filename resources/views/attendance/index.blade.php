@@ -3,7 +3,7 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight inline-block">
             {{ __('Attendance') }}
         </h2>
-
+        @can('attendance-create')
         <div class="flex justify-center items-center float-right">
 
             <a href="{{ route('attendance.create') }}" class="flex items-center px-4 py-2 text-gray-600 bg-white border rounded-lg focus:outline-none hover:bg-gray-100 transition-colors duration-200 transform dark:text-gray-200 dark:border-gray-200  dark:hover:bg-gray-700 ml-2">
@@ -12,6 +12,7 @@
                 </svg>
             </a>
         </div>
+        @endcan
     </x-slot>
 
     <div class="py-6">
@@ -25,7 +26,9 @@
                                 <th class="py-2 px-2 text-center">Meeting</th>
                                 <th class="py-2 px-2 text-center">User</th>
                                 <th class="py-2 px-2 text-center">Status</th>
-                                <th class="py-2 px-2 text-center">Action</th>
+                                @can('attendance-create')
+                                    <th class="py-2 px-2 text-center">Action</th>
+                                @endif
                             </tr>
                             </thead>
                             @foreach($attendances as $at)
@@ -40,6 +43,8 @@
                                     <td class="py-1 px-2 text-center">
                                         {{ $at->status }}
                                     </td>
+
+                                    @can(['attendance-create','attendance-edit','attendance-delete'])
                                     <td class="py-1 px-2 text-center">
 
                                         @can('attendance-edit')
@@ -55,14 +60,15 @@
                                             </a>
                                         @endcan
 
-                                    @can('attendance-delete')
-                                        <form action="{{ route('attendance.destroy', $at) }}" method="POST" class="inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Delete</button>
-                                        </form>
-                                    @endcan
+                                        @can('attendance-delete')
+                                            <form action="{{ route('attendance.destroy', $at) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Delete</button>
+                                            </form>
+                                        @endcan
                                     </td>
+                                    @endcan
                                 </tr>
                                 </tbody>
                             @endforeach

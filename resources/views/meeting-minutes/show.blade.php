@@ -42,6 +42,7 @@
                             <p class="mt-1 text-gray-600">{{ $meetingMinutes->updated_at->format('Y-m-d H:i:s') }}</p>
                         </div>
                     </div>
+                    @can(['meeting-minutes-edit','meeting-minutes-delete'])
                     <div class="mt-6 flex justify-end">
                         <a href="{{ route('meeting-minutes.edit', $meetingMinutes) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 mr-2">
                             {{ __('Edit') }}
@@ -54,6 +55,7 @@
                             </button>
                         </form>
                     </div>
+                        @endcan
                 </div>
             </div>
         </div>

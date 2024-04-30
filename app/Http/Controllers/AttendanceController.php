@@ -9,6 +9,7 @@ use App\Models\Meeting;
 use App\Models\User;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller implements HasMiddleware
 {
@@ -27,7 +28,13 @@ class AttendanceController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        $attendances = Attendance::with(['meeting', 'user'])->get();
+        $attendances = null;
+        if (Auth::user()->hasRole(['Super-Admin', 'Company Secretary'])) {
+            $attendances = Attendance::with(['meeting', 'user'])->get();
+        } else {
+            $attendances = Attendance::where('user_id', Auth::user()->id)->with(['meeting', 'user'])->get();
+        }
+
         return view('attendance.index', compact('attendances'));
     }
 
