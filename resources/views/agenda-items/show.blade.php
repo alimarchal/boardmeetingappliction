@@ -105,7 +105,26 @@
     </x-slot>
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg pt-4 pb-2 ">
+            <div class="bg-white overflow-hidden  sm:rounded-lg pt-4 pb-2 ">
+
+
+                <table style="margin: 0px;">
+                    <tr>
+                        <td style="width: 33.33%">
+                            <div style="float: left; margin-left: 10%">
+                                @php $test_report_data = $meeting->slug . ' Board Meeting '. "\n". $meeting->id . "\n" . \Carbon\Carbon::parse($meeting->date_and_time)->format('d-M-Y H:i:s')  . "\n" . \Illuminate\Support\Facades\Auth::user()->id ; @endphp
+                                {!! DNS2D::getBarcodeSVG($test_report_data, 'QRCODE',3,3) !!}
+                            </div>
+                        </td>
+                        <td style="width: 33.33%">
+                            <img src="{{ url('images/logo.png') }}" alt="Logo" style="margin:auto; height: 100px;">
+                        </td>
+                        <td style="width: 33.33%; text-align: center;">
+                            <div style="margin: auto; margin-left: 30%">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
 
                 <table style="margin-top: 10px; font-size:18px; line-height: 1.2; text-align: center; font-weight: bold;">
                     <tbody>
@@ -114,12 +133,15 @@
                             {{ $meeting->slug }} {{ $meeting->title }}
                             <br>
                             {{ $meeting->location }} <br>
-                            Date & Time: {{ \Carbon\Carbon::parse($meeting->date_and_time)->format('d-M-Y H:i:s') }} PST
+                            Date & Time: {{ \Carbon\Carbon::parse($meeting->date_and_time)->format('d-M-Y H:i:s') }} PST <span style="font-size: 5px;">{{\Illuminate\Support\Facades\Auth::user()->id}}</span>
                             <br>
-                            <span style="font-size: 14px;">MUID: {{ $meeting->id }}</span>
+                            <span style="font-size: 14px;">MUID: {{ $meeting->id }}-{{\Illuminate\Support\Facades\Auth::user()->id}}</span>
                             <br>
-                            Agenda Item: {{ $agendaItems->order }}  - {{ $agendaItems->title }}
                             {{--                                        Created At :: {{ \Carbon\Carbon::parse($meeting->created_at)->format('d-m-Y H:i:s a') }}--}}
+                        </td>
+                    <tr style="text-align: left!important;">
+                        <td>
+                            <span style=" text-align: left;">Agenda: {{ $agendaItems->title }}</span>
                         </td>
                     </tr>
                     </tbody>
@@ -128,15 +150,15 @@
 
 
 
-                <hr class="mb-1 mt-1">
-                <div class="prose max-w-full" style="margin-top: 10px;padding-left: 10px;padding-right: 10px;">
+                <hr style="border: 1px solid black!important;" class="my-4">
+                <div class="prose max-w-full" style="margin-top: 15px;padding-left: 30px;padding-right: 30px;">
                     {!! $agendaItems->description !!}
                 </div>
 
 
 
                 @if($agendaItems->comments->isNotEmpty())
-                    <h2 class="text-2xl text-center mb-4 mt-4 font-bold text-black ">Meeting Agenda Attachments / Documents</h2>
+                    <h2 class="text-2xl text-center mb-4 mt-4 font-bold text-black ">Meeting Agenda Attachments / Documents / Comments</h2>
                     <div class="relative overflow-x-auto ">
 
                         <x-status-message class="ml-4 mt-4"/>
@@ -146,9 +168,12 @@
                             <thead>
                             <tr class="bg-gray-200 text-white  uppercase text-sm" style="background-color: #f78f1e;">
                                 <th class="py-2 px-2 text-center">ID</th>
+                                <th class="py-2 px-2 text-center">Added By</th>
                                 <th class="py-2 px-2 text-center">Title</th>
                                 <th class="py-2 px-2 text-center">Attachment</th>
+                                @can('agenda-item-delete')
                                 <th class="py-2 px-2 text-center print:hidden">Action</th>
+                                    @endcan
                             </tr>
                             </thead>
                             @foreach($agendaItems->comments->sortBy('created_at') as $cmt)
@@ -156,6 +181,9 @@
                                 <tr class="border-b border-gray-200 hover:bg-gray-100">
                                     <td class="py-1 px-2 text-center">
                                         {{ $loop->iteration }}
+                                    </td>
+                                    <td class="py-1 px-2 text-center">
+                                        {{ $cmt->user?->name }}
                                     </td>
                                     <td class="py-1 px-2 text-center">
                                         {{ $cmt->description }}
@@ -172,17 +200,18 @@
                                         @endif
 
                                     </td>
-
+                                    @can('agenda-item-delete')
                                     <td class="py-1 px-2 text-center print:hidden">
 
-                                        @can('agenda-item-delete')
+
                                             <form action="{{ route('meeting.agendaItem.comment.destroy', [$agendaItems->id, $cmt->id]) }}" method="POST" class="inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Delete</button>
                                             </form>
-                                        @endcan
+
                                     </td>
+                                    @endcan
                                 </tr>
                                 </tbody>
                             @endforeach

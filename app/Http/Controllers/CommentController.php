@@ -40,7 +40,7 @@ class CommentController extends Controller
         $request->merge(['user_id' => auth()->user()->id]);
 
         $comment = Comment::create($request->all());
-        session()->flash('success', 'Your attachment has been successfully added to this meeting...');
+        session()->flash('success', 'Your Attachments / Documents / Comments has been successfully added to this meeting...');
 
         return to_route('meeting.agenda-item.show', [ $meeting->id, $agendaItems->id]);
     }

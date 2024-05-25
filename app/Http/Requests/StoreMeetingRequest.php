@@ -23,6 +23,7 @@ class StoreMeetingRequest extends FormRequest
     {
         return [
             //
+            'me_id' => 'required|unique:meetings,me_id',
             'title' => 'required',
             'date_and_time' => 'required',
             'location' => 'required',
@@ -35,6 +36,8 @@ class StoreMeetingRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'me_id.unique' => 'This meeting no already exists. Please choose different or edit previous one.',
+            'me_id.required' => 'This meeting no is required.',
             'title.required' => 'Meeting title is required.',
             'description.required' => 'Meeting description is required.',
             'path_attachment_file.mimes' => 'Invalid file format. Allowed formats are PDF, JPG, JPEG, PNG, DOC, and DOCX.',

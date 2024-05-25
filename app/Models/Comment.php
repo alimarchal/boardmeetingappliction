@@ -17,10 +17,15 @@ class Comment extends Model
 
 
 
-    protected $fillable = ['id','meeting_id','description','agenda_items_id','path_attachment','deleted_at'];
+    protected $fillable = ['id','meeting_id','description','agenda_items_id','path_attachment','deleted_at','user_id'];
 
     public function meeting(): BelongsTo
     {
         return $this->belongsTo(Meeting::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

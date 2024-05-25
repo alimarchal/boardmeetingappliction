@@ -14,7 +14,7 @@ class Meeting extends Model
     use HasUuids;
     use softDeletes;
 
-    protected $fillable = ['id', 'title', 'me_id','user_id', 'description', 'path_attachment', 'date_and_time', 'location', 'status'];
+    protected $fillable = ['id', 'title', 'me_id','user_id', 'description', 'path_attachment', 'date_and_time', 'location', 'status','meeting_status'];
 
 
 

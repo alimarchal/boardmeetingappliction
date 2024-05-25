@@ -89,6 +89,18 @@
                 <form method="POST" action="{{ route('meeting.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4 mt-4 pl-8 pb-4 pt-4 pr-8">
+
+                        <div>
+                            <x-label for="me_id" value="Meeting No"  class="block mt-1 w-full"  :required="true"/>
+                            <select name="me_id" id="me_id" class="block mt-1 w-full" required>
+                                <option value="">None</option>
+                                @for($i = 1; $i <= 100; $i++)
+                                    <option value="{{ $i }}">{{ $i }}</option>
+                                @endfor
+                            </select>
+                        </div>
+
+
                         <div>
                             <x-label for="title" value="Meeting Title" :required="true"/>
                             <x-input id="title" name="title" class="block mt-1 w-full" type="text" required value="{{ old('title') }}"/>

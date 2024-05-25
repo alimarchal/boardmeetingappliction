@@ -21,20 +21,21 @@ return new class extends Migration
             $table->timestamp('date_and_time')->nullable();
             $table->string('location')->nullable();
             $table->string('path_attachment')->nullable();
+            $table->enum('meeting_status', ['Digital', 'Manual'])->default('Digital');
             $table->enum('status', ['Lock', 'Unlock'])->default('Lock');
             $table->softDeletes();
             $table->timestamps();
         });
 
-        DB::unprepared('
-            CREATE TRIGGER meetings_me_id_trigger
-            BEFORE INSERT ON meetings
-            FOR EACH ROW
-            SET NEW.me_id = IFNULL(
-                (SELECT MAX(me_id) + 1 FROM meetings WHERE me_id >= 75),
-                75
-            )
-        ');
+//        DB::unprepared('
+//            CREATE TRIGGER meetings_me_id_trigger
+//            BEFORE INSERT ON meetings
+//            FOR EACH ROW
+//            SET NEW.me_id = IFNULL(
+//                (SELECT MAX(me_id) + 1 FROM meetings WHERE me_id >= 75),
+//                75
+//            )
+//        ');
     }
 
     /**

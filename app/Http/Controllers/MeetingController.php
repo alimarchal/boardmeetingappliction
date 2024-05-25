@@ -64,7 +64,15 @@ class MeetingController extends Controller implements HasMiddleware
             $profile_path = $request->file('path_attachment_file')->store('meeting_main_attachment', 'public');
             $request->merge(['path_attachment' => $profile_path]);
         }
-        $request->merge(['user_id' => auth()->user()->id]);
+
+
+
+        $meeting_status = "Digital";
+        if ($request->me_id <= 75) {
+            $meeting_status = "Manual";
+        }
+
+        $request->merge(['user_id' => auth()->user()->id, 'meeting_status' => $meeting_status]);
         $meeting = Meeting::create($request->all());
         session()->flash('success', 'Your meeting record has been successfully created.');
         return to_route('meeting.show', $meeting->id);
