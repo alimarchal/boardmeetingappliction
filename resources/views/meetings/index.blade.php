@@ -53,6 +53,16 @@
                     </div>
 
 
+                    <div>
+                        <x-label for="meeting_status" value="Meeting Status"  class="block w-full"  :required="true"/>
+                        <select name="filter[meeting_status]" id="meeting_status" class="border-gray-300 mt-1 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" required>
+                            <option value="">None</option>
+                            <option value="Manual">Manual</option>
+                            <option value="Digital">Digital</option>
+                        </select>
+                    </div>
+
+
 
 
                 </div>

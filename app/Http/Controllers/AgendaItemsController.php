@@ -54,7 +54,8 @@ class AgendaItemsController extends Controller
      */
     public function show(Meeting $meeting, AgendaItems $agendaItems)
     {
-        return view('agenda-items.show', compact('agendaItems','meeting'));
+        $auth_id = auth()->user()->id;
+        return view('agenda-items.show', compact('agendaItems','meeting','auth_id'));
 
     }
 

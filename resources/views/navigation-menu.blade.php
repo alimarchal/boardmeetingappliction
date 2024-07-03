@@ -24,11 +24,11 @@
                     @endcan
 
 
-                    @can('attendance-access')
-                        <x-nav-link href="{{ route('attendance.index') }}" :active="request()->routeIs('attendance.*')">
-                            {{ __('Attendance') }}
-                        </x-nav-link>
-                    @endcan
+{{--                    @can('attendance-access')--}}
+{{--                        <x-nav-link href="{{ route('attendance.index') }}" :active="request()->routeIs('attendance.*')">--}}
+{{--                            {{ __('Attendance') }}--}}
+{{--                        </x-nav-link>--}}
+{{--                    @endcan--}}
 
 
                     @can('meeting-minutes-access')

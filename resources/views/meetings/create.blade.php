@@ -92,7 +92,7 @@
 
                         <div>
                             <x-label for="me_id" value="Meeting No"  class="block mt-1 w-full"  :required="true"/>
-                            <select name="me_id" id="me_id" class="block mt-1 w-full" required>
+                            <select name="me_id" id="me_id" class="border-gray-300 mt-2 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" required>
                                 <option value="">None</option>
                                 @for($i = 1; $i <= 100; $i++)
                                     <option value="{{ $i }}">{{ $i }}</option>
@@ -116,6 +116,16 @@
                         <div>
                             <x-label for="location" value="Location" :required="true"/>
                             <x-input id="location" name="location" class="block mt-1 w-full" type="text" required value="{{ old('location') }}"/>
+                        </div>
+
+
+                        <div>
+                            <x-label for="meeting_status" value="Meeting Status"  class="block mt-1 w-full"  :required="true"/>
+                            <select name="meeting_status" id="meeting_status" class="border-gray-300 mt-2 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full" required>
+                                <option value="">None</option>
+                                <option value="Manual">Manual</option>
+                                <option value="Digital" selected>Digital</option>
+                            </select>
                         </div>
 
 

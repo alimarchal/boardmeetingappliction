@@ -21,9 +21,6 @@ class DashboardController extends Controller
             ->orderBy('month', 'asc')
             ->get();
 
-
-
-
         return view('dashboard', compact('lock_unlock_chart_data', 'meetingCounts'));
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Requests\StoreMeetingRequest;
 use App\Http\Requests\UpdateMeetingRequest;
 use App\Models\Meeting;
 use Illuminate\Support\Facades\Auth;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -31,13 +32,13 @@ class MeetingController extends Controller implements HasMiddleware
         $meetings = null;
         if (Auth::user()->hasRole(['Super-Admin', 'Company Secretary'])) {
             $meetings = QueryBuilder::for(Meeting::class)
-                ->allowedFilters(['id', 'title', 'description', 'path_attachment'])
+                ->allowedFilters(['id', 'title', 'description', 'path_attachment', AllowedFilter::exact('meeting_status')])
 //                ->with('comments')
                 ->orderByDesc('id')
                 ->get();
         } else {
             $meetings = QueryBuilder::for(Meeting::class)
-                ->allowedFilters(['id', 'title', 'description', 'path_attachment'])
+                ->allowedFilters(['id', 'title', 'description', 'path_attachment',AllowedFilter::exact('meeting_status')])
                 ->where('status','Unlock')
 //                ->with('comments')
                 ->orderByDesc('id')
@@ -83,7 +84,8 @@ class MeetingController extends Controller implements HasMiddleware
      */
     public function show(Meeting $meeting)
     {
-        return view('meetings.show', compact('meeting'));
+        $auth_id = auth()->user()->id;
+        return view('meetings.show', compact('meeting','auth_id'));
     }
 
     /**
