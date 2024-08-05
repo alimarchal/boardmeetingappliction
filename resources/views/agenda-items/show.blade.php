@@ -106,7 +106,7 @@
 
         <div class="fixed inset-0 z-0 pointer-events-none print:block hidden">
             <div class="w-full h-full flex flex-wrap content-center justify-center opacity-5 transform -rotate-45 text-gray-500 text-xs">
-                @for ($i = 0; $i < 5000; $i++)
+                @for ($i = 0; $i < 500; $i++)
                     <div class="p-0.5 whitespace-nowrap">Board Meeting {{ $meeting->me_id }} : <span style="font-size: 2px;"> {{ $auth_id }}</span></div>
                 @endfor
             </div>

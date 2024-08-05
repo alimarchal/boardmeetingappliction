@@ -90,7 +90,7 @@
                                 <th class="py-2 px-2 text-center">ID</th>
                                 <th class="py-2 px-2 text-center">Meeting Title</th>
 {{--                                <th class="py-2 px-2 text-center">Attachment</th>--}}
-                                <th class="py-2 px-2 text-center">Created At</th>
+                                <th class="py-2 px-2 text-center hidden">Created At</th>
                                 <th class="py-2 px-2 text-center">Status</th>
                                 <th class="py-2 px-2 text-center">Action</th>
                             </tr>
@@ -116,7 +116,7 @@
 {{--                                        @endif--}}
 
 {{--                                    </td>--}}
-                                    <td class="py-1 px-2 text-center">
+                                    <td class="py-1 px-2 text-center hidden">
                                         {{ \Carbon\Carbon::parse($mt->created_at)->diffForHumans() }}
                                     </td>
 

@@ -4,23 +4,20 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon_package_v0.16/apple-touch-icon.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon_package_v0.16/favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon_package_v0.16/favicon-16x16.png') }}">
+        <link rel="manifest" href="{{ asset('favicon_package_v0.16/site.webmanifest') }}">
+        <link rel="mask-icon" href="{{ asset('favicon_package_v0.16/safari-pinned-tab.svg') }}" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff">
 
+        <!-- Add these new lines for better Android support -->
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="icon" sizes="192x192" href="{{ asset('favicon_package_v0.16/android-chrome-192x192.png') }}">
+        <link rel="icon" sizes="512x512" href="{{ asset('favicon_package_v0.16/android-chrome-512x512.png') }}">
         <title>{{ config('app.name', 'Laravel') }}</title>
         @stack('header')
-        <!-- Place the first <script> tag in your HTML's <head> -->
-{{--        <script src="https://cdn.tiny.cloud/1/izbyerk8x92uls8z2ulnezm5uaudhf41lw0lebop5ba724o5/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>--}}
-{{--        <!-- Place the following <script> and <textarea> tags your HTML's <body> -->--}}
-{{--        <script>--}}
-{{--            tinymce.init({--}}
-{{--                selector: 'textarea',--}}
-{{--                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',--}}
-{{--                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',--}}
-{{--            });--}}
-{{--        </script>--}}
-{{--<textarea>--}}
-{{--  Welcome to TinyMCE!--}}
-{{--</textarea>--}}
-
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />

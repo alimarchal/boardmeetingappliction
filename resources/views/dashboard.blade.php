@@ -34,7 +34,7 @@
                         <div class="grid grid-cols-3 gap-1">
                             <div class="col-span-2">
                                 <div class="text-3xl font-bold leading-8">
-                                    {{ \App\Models\AgendaItems::count() }}
+                                    {{ \App\Models\Meeting::where('meeting_status','Manual')->count() }}
                                 </div>
                                 <div class="mt-1 text-base font-bold text-gray-600">
                                     Manual Meeting
@@ -70,18 +70,13 @@
                 BOARD MEETING STATISTICS
             </h1>
 
-            <div class="grid grid-cols-12 gap-6">
-
-                <div class="col-span-6 md:col-span-6 lg:col-span-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="col-span-1">
                     <div class="bg-white rounded-lg shadow-lg p-4" id="chart"></div>
                 </div>
-
-                <div class="col-span-6 md:col-span-6 lg:col-span-6">
+                <div class="col-span-1">
                     <div class="bg-white rounded-lg shadow-lg p-4" id="chart_subjects"></div>
                 </div>
-
-
-
             </div>
 
         </div>
@@ -94,7 +89,7 @@
             var options = {
                 series: [@foreach($lock_unlock_chart_data as $key => $value) {{ $value }}, @endforeach],
                 chart: {
-                    width: 550,
+                    height: 350,
                     type: 'pie',
                 },
                 title: {
@@ -116,7 +111,7 @@
                     breakpoint: 480,
                     options: {
                         chart: {
-                            width: 200
+                            height: 350,
                         },
                         legend: {
                             position: 'bottom'
@@ -143,8 +138,8 @@
                 }],
                 chart: {
                     type: 'bar',
-                    width: '550',
-                    height: '435',
+                    height: 350,
+                    // height: '435',
                 },
 
                 title: {
