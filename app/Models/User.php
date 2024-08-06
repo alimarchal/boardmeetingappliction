@@ -66,4 +66,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function committeeMemberships()
+    {
+        return $this->hasMany(CommitteeMember::class, 'user_id');
+    }
 }

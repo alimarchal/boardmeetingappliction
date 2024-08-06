@@ -4,6 +4,7 @@ use App\Http\Controllers\AgendaItemsController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MeetingCommitteeController;
 use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\MeetingMinutesController;
 use App\Http\Controllers\UserController;
@@ -45,6 +46,12 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::put('/meeting-minutes/{meetingMinutes}',[MeetingMinutesController::class, 'update'])->name('meeting-minutes.update');
     Route::post('/meeting-minutes',[MeetingMinutesController::class, 'store'])->name('meeting-minutes.store');
     Route::delete('/meeting-minutes/{meetingMinutes}',[MeetingMinutesController::class, 'destroy'])->name('meeting-minutes.destroy');
+
+
+    Route::resource('committees', MeetingCommitteeController::class);
+    Route::post('committees/{committee}/meetings', [MeetingCommitteeController::class, 'addMeeting'])->name('committees.addMeeting');
+
+
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
