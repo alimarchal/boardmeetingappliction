@@ -26,13 +26,25 @@ class CommitteeMeetingAgendaItemController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     */
-    public function store(StoreCommitteeMeetingAgendaItemRequest $request)
-    {
-        $agendaItem = new CommitteeMeetingAgendaItem($request->all());
-        $committeeMeeting->agendaItems()->save($agendaItem);
-        return redirect()->route('committee_meetings.show', $committeeMeeting->id)->with('success', 'Agenda Item added successfully.');
-    }
+     */public function store(StoreCommitteeMeetingAgendaItemRequest $request, $committeeMeetingId)
+{
+    // Create a new agenda item and associate it with the committee meeting
+    $agendaItem = new CommitteeMeetingAgendaItem();
+
+    // Populate the fields based on the request
+    $agendaItem->title = $request->title;
+    $agendaItem->description = $request->description; // Use the actual description from the request
+    $agendaItem->committee_meeting_id = $committeeMeetingId; // Set the committee meeting ID
+    $agendaItem->order = $request->order; // Assuming order is part of your request
+    $agendaItem->user_id = auth()->id(); // Get the authenticated user's ID
+
+    // Save the agenda item
+    $agendaItem->save();
+
+    return redirect()->route('committee_meeting.show', $committeeMeetingId)
+                     ->with('success', 'Agenda Item added successfully.');
+}
+
 
 
     /**
@@ -48,7 +60,7 @@ class CommitteeMeetingAgendaItemController extends Controller
      */
     public function edit(CommitteeMeetingAgendaItem $committeeMeetingAgendaItem)
     {
-        return view('committee_meeting_agenda_items.edit', compact('committeeMeeting', 'agendaItem'));
+        return view('committee_meeting_agenda_items.edit', data: compact('committeeMeeting', 'agendaItem'));
     }
 
     /**

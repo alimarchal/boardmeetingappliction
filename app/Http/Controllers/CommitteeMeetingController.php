@@ -30,8 +30,12 @@ class CommitteeMeetingController extends Controller
      */
     public function store(StoreCommitteeMeetingRequest $request)
     {
-        $meeting = CommitteeMeeting::create($request->all());
-        return redirect()->route('committee_meetings.index')->with('success', 'Committee Meeting created successfully.');
+        $meeting = CommitteeMeeting::create([
+            'user_id' => auth()->id(), // Assuming you are using Laravel's built-in authentication
+            ...$request->all() // Spread the request data
+        ]);
+
+        return redirect()->route('committee_meeting.index')->with('success', 'Committee Meeting created successfully.');
     }
 
     /**
@@ -56,7 +60,7 @@ class CommitteeMeetingController extends Controller
     public function update(UpdateCommitteeMeetingRequest $request, CommitteeMeeting $committeeMeeting)
     {
         $committeeMeeting->update($request->all());
-        return redirect()->route('committee_meetings.index')->with('success', 'Committee Meeting updated successfully.');
+        return redirect()->route('committee_meeting.index')->with('success', 'Committee Meeting updated successfully.');
     }
 
     /**
@@ -65,6 +69,6 @@ class CommitteeMeetingController extends Controller
     public function destroy(CommitteeMeeting $committeeMeeting)
     {
         $committeeMeeting->delete();
-        return redirect()->route('committee_meetings.index')->with('success', 'Committee Meeting deleted successfully.');
+        return redirect()->route('committee_meeting.index')->with('success', 'Committee Meeting deleted successfully.');
     }
 }

@@ -13,7 +13,7 @@ class CommitteeMeetingAgendaItem extends Model
     use HasUuids;
     use SoftDeletes;
     protected $fillable = [
-        'meeting_id',       // Foreign key to the meeting this agenda item belongs to
+        ' committee_meeting_id',       // Foreign key to the meeting this agenda item belongs to
         'user_id',          // Foreign key for the user who created this agenda item
         'title',            // Title of the agenda item
         'description',      // Description of the agenda item

@@ -52,7 +52,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
 
     // Routes for CommitteeMeeting
-    Route::get('/committee-meeting', [CommitteeMeetingController::class, 'index'])->name('committee_meeting.index');
+    Route::get('/committee-meeting', [CommitteeMeetingController::class, 'index'])->name(name: 'committee_meeting.index');
     Route::get('/committee-meeting/create', [CommitteeMeetingController::class, 'create'])->name('committee_meeting.create');
     Route::post('/committee-meeting', [CommitteeMeetingController::class, 'store'])->name('committee_meeting.store');
     Route::get('/committee-meeting/{committeeMeeting}/show', [CommitteeMeetingController::class, 'show'])->name('committee_meeting.show');

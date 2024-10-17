@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('committee_meeting_agenda_items', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('committee_meeting_id')->constrained();
+            $table->foreignUuid(column: 'committee_meeting_id')->constrained();
             $table->foreignId('user_id')->constrained();
             $table->string('title');
             $table->text('description');
