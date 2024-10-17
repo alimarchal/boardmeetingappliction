@@ -3,6 +3,9 @@
 use App\Http\Controllers\AgendaItemsController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CommitteeMeetingAgendaItemController;
+use App\Http\Controllers\CommitteeMeetingCommentController;
+use App\Http\Controllers\CommitteeMeetingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\MeetingMinutesController;
@@ -45,6 +48,31 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::put('/meeting-minutes/{meetingMinutes}',[MeetingMinutesController::class, 'update'])->name('meeting-minutes.update');
     Route::post('/meeting-minutes',[MeetingMinutesController::class, 'store'])->name('meeting-minutes.store');
     Route::delete('/meeting-minutes/{meetingMinutes}',[MeetingMinutesController::class, 'destroy'])->name('meeting-minutes.destroy');
+
+
+
+    // Routes for CommitteeMeeting
+    Route::get('/committee-meeting', [CommitteeMeetingController::class, 'index'])->name('committee_meeting.index');
+    Route::get('/committee-meeting/create', [CommitteeMeetingController::class, 'create'])->name('committee_meeting.create');
+    Route::post('/committee-meeting', [CommitteeMeetingController::class, 'store'])->name('committee_meeting.store');
+    Route::get('/committee-meeting/{committeeMeeting}/show', [CommitteeMeetingController::class, 'show'])->name('committee_meeting.show');
+    Route::get('/committee-meeting/{committeeMeeting}/edit', [CommitteeMeetingController::class, 'edit'])->name('committee_meeting.edit');
+    Route::put('/committee-meeting/{committeeMeeting}', [CommitteeMeetingController::class, 'update'])->name('committee_meeting.update');
+    Route::delete('/committee-meeting/{committeeMeeting}', [CommitteeMeetingController::class, 'destroy'])->name('committee_meeting.destroy');
+
+    // Routes for CommitteeMeetingAgendaItem
+    Route::get('/committee-meeting/{committeeMeeting}/agenda-item/create', [CommitteeMeetingAgendaItemController::class, 'create'])->name('committee_meeting.agenda_item.create');
+    Route::post('/committee-meeting/{committeeMeeting}/agenda-item', [CommitteeMeetingAgendaItemController::class, 'store'])->name('committee_meeting.agenda_item.store');
+    Route::get('/committee-meeting/{committeeMeeting}/agenda-item/{agendaItem}/show', [CommitteeMeetingAgendaItemController::class, 'show'])->name('committee_meeting.agenda_item.show');
+    Route::get('/committee-meeting/{committeeMeeting}/agenda-item/{agendaItem}/edit', [CommitteeMeetingAgendaItemController::class, 'edit'])->name('committee_meeting.agenda_item.edit');
+    Route::put('/committee-meeting/{committeeMeeting}/agenda-item/{agendaItem}', [CommitteeMeetingAgendaItemController::class, 'update'])->name('committee_meeting.agenda_item.update');
+    Route::delete('/committee-meeting/{committeeMeeting}/agenda-item/{agendaItem}', [CommitteeMeetingAgendaItemController::class, 'destroy'])->name('committee_meeting.agenda_item.destroy');
+
+    // Routes for CommitteeMeetingComment
+    Route::post('/committee-meeting/{committeeMeeting}/agenda-item/{agendaItem}/comment', [CommitteeMeetingCommentController::class, 'store'])->name('committee_meeting.agenda_item.comment.store');
+    Route::delete('/committee-meeting/agenda-item/{agendaItem}/comment/{comment}', [CommitteeMeetingCommentController::class, 'destroy'])->name('committee_meeting.agenda_item.comment.destroy');
+
+
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');

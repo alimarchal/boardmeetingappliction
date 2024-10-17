@@ -24,6 +24,14 @@
                     @endcan
 
 
+
+                    @can('meetings-access')
+                        <x-nav-link href="{{ route('committee_meeting.index') }}" :active="request()->routeIs('committee_meeting.*')">
+                            {{ __('Committee Meetings') }}
+                        </x-nav-link>
+                    @endcan
+
+
 {{--                    @can('attendance-access')--}}
 {{--                        <x-nav-link href="{{ route('attendance.index') }}" :active="request()->routeIs('attendance.*')">--}}
 {{--                            {{ __('Attendance') }}--}}
