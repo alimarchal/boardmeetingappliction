@@ -20,8 +20,8 @@
                         </div>
 
                         <div>
-                            <x-label for="type" value="Committee Type" :required="true"/>
-                            <x-input id="type" name="type" class="block mt-1 w-full" type="text" required value="{{ old('type') }}"/>
+                            <x-label for="description" value="Committee Type" :required="true"/>
+                            <x-input id="description" name="description" class="block mt-1 w-full" type="text" required value="{{ old('type') }}"/>
                         </div>
 
                         <div>
@@ -49,22 +49,24 @@
         </div>
     </div>
 
+    <!-- Hidden member template -->
+    <template id="member-template">
+        <div class="flex items-center mt-2">
+            <select name="members[0][user_id]" class="block mt-1 w-1/2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
+    <option value="">Select a user</option>
+    @foreach($users as $user)
+        <option value="{{ $user->id }}">{{ $user->name }}</option>
+    @endforeach
+</select>
+
+    </template>
+
     <script>
         function addMember() {
             const memberCount = document.querySelectorAll('#members .flex').length;
             const membersDiv = document.getElementById('members');
-            const newMember = `
-                <div class="flex items-center mt-2">
-                    <select name="members[${memberCount}][user_id]" class="block mt-1 w-1/2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
-                        <option value="">Select a user</option>
-                        @foreach($users as $user)
-            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                        @endforeach
-            </select>
-            <x-input name="members[${memberCount}][position]" class="block mt-1 w-1/2 ml-2" type="text" placeholder="Position" required />
-                </div>
-            `;
-            membersDiv.insertAdjacentHTML('beforeend', newMember);
+            const memberTemplate = document.getElementById('member-template').innerHTML.replace(/__INDEX__/g, memberCount);
+            membersDiv.insertAdjacentHTML('beforeend', memberTemplate);
         }
     </script>
 </x-app-layout>

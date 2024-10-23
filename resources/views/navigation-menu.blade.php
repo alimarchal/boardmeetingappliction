@@ -51,6 +51,11 @@
                             {{ __('Users') }}
                         </x-nav-link>
                     @endcan
+                    @can('committees-access')
+                        <x-nav-link href="{{ route('committees.index') }}" :active="request()->routeIs('committees.*')">
+                            {{ __('Committees') }}
+                        </x-nav-link>
+                    @endcan
 
 
 

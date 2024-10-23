@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCommitteeRequest;
 use App\Http\Requests\UpdateCommitteeRequest;
 use App\Models\Committee;
+use App\Models\User; // Make sure to import the User model
+use Illuminate\Support\Facades\Auth;
+
+
+use Illuminate\Http\Request;
+
 
 class CommitteeController extends Controller
 {
@@ -13,7 +19,9 @@ class CommitteeController extends Controller
      */
     public function index()
     {
-        //
+        // Fetch all committees and return them to a view
+        $committees = Committee::all();
+        return view('committees.index', compact('committees'));
     }
 
     /**
@@ -21,7 +29,11 @@ class CommitteeController extends Controller
      */
     public function create()
     {
-        //
+        // Fetch all users to populate the members dropdown
+        $users = User::all(); // You can add filtering if necessary (e.g., User::where('role', 'member')->get())
+
+        // Pass users to the view
+        return view('committees.create', compact('users'));
     }
 
     /**
@@ -29,7 +41,12 @@ class CommitteeController extends Controller
      */
     public function store(StoreCommitteeRequest $request)
     {
-        //
+        // Validate and store the committee
+        Committee::create($request->validated());
+
+
+        // Redirect back with success message
+        return redirect()->route('committees.index')->with('success', 'Committee created successfully.');
     }
 
     /**
@@ -37,7 +54,8 @@ class CommitteeController extends Controller
      */
     public function show(Committee $committee)
     {
-        //
+        // Show details of a specific committee
+        return view('committees.show', compact('committee'));
     }
 
     /**
@@ -45,7 +63,8 @@ class CommitteeController extends Controller
      */
     public function edit(Committee $committee)
     {
-        //
+        // Return a view with a form to edit the specified committee
+        return view('committees.edit', compact('committee'));
     }
 
     /**
@@ -53,7 +72,11 @@ class CommitteeController extends Controller
      */
     public function update(UpdateCommitteeRequest $request, Committee $committee)
     {
-        //
+        // Validate and update the committee
+        $committee->update($request->validated());
+
+        // Redirect back with success message
+        return redirect()->route('committees.index')->with('success', 'Committee updated successfully.');
     }
 
     /**
@@ -61,6 +84,10 @@ class CommitteeController extends Controller
      */
     public function destroy(Committee $committee)
     {
-        //
+        // Delete the committee
+        $committee->delete();
+
+        // Redirect back with success message
+        return redirect()->route('committees.index')->with('success', 'Committee deleted successfully.');
     }
 }

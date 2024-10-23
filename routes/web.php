@@ -10,7 +10,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\MeetingMinutesController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommitteeController;
 use Illuminate\Support\Facades\Route;
+
 use Spatie\Permission\Models\Permission;
 
 Route::get('/', function () {
@@ -84,5 +86,12 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 //    Route::resource('agenda-items', AgendaItemsController::class);
 
 
+Route::get('committees', action: [CommitteeController::class, 'index'])->name('committees.index'); // Display a listing of the resource
+Route::get('committees/create', [CommitteeController::class, 'create'])->name('committees.create'); // Show the form for creating a new resource
+Route::post('committees', [CommitteeController::class, 'store'])->name('committees.store'); // Store a newly created resource in storage
+Route::get('committees/{committee}', [CommitteeController::class, 'show'])->name('committees.show'); // Display the specified resource
+Route::get('committees/{committee}/edit', [CommitteeController::class, 'edit'])->name('committees.edit'); // Show the form for editing the specified resource
+Route::put('committees/{committee}', [CommitteeController::class, 'update'])->name('committees.update'); // Update the specified resource in storage
+Route::delete('committees/{committee}', [CommitteeController::class, 'destroy'])->name('committees.destroy'); // Remove the specified resource from storage
 
 });
