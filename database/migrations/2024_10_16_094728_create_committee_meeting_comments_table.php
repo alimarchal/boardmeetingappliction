@@ -25,7 +25,7 @@ return new class extends Migration
 
             // Old: $table->foreignUuid('committee_meeting_agenda_items_id')->nullable()->constrained();
             // New: Explicitly naming the foreign key constraint and shortening the column name
-            $table->foreignUuid('agenda_item_id')
+            $table->foreignUuid('committee_meeting_agenda_item_id')
                 ->nullable()
                 ->constrained('committee_meeting_agenda_items')
                 ->onDelete('set null')

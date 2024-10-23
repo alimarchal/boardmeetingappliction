@@ -29,4 +29,19 @@ class CommitteeMeeting extends Model
     {
         return $this->hasMany(CommitteeMeetingAgendaItem::class);
     }
+
+
+
+    public function committee()
+    {
+        return $this->belongsTo(Committee::class);
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+
+
 }

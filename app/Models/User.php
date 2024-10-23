@@ -66,4 +66,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+    public function committees()
+    {
+        return $this->belongsToMany(Committee::class, 'committee_members')
+            ->withPivot('role')
+            ->withTimestamps();
+    }
 }

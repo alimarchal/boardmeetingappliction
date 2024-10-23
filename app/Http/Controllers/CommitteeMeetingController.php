@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCommitteeMeetingRequest;
 use App\Http\Requests\UpdateCommitteeMeetingRequest;
 use App\Models\CommitteeMeeting;
+use App\Models\CommitteeMeetingAgendaItem;
 
 class CommitteeMeetingController extends Controller
 {

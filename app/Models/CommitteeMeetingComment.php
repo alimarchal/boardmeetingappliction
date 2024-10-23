@@ -15,8 +15,8 @@ class CommitteeMeetingComment extends Model
 
     protected $fillable = [
         'user_id',              // Foreign key for the user who made the comment
-        'meeting_id',           // Foreign key to the meeting this comment belongs to
-        'agenda_items_id',      // Foreign key to the agenda item this comment is related to (nullable)
+        'committee_meeting_id',           // Foreign key to the meeting this comment belongs to
+        'committee_meeting_agenda_item_id',      // Foreign key to the agenda item this comment is related to (nullable)
         'description',          // The content of the comment
         'path_attachment',      // Path to any attachment related to the comment
     ];

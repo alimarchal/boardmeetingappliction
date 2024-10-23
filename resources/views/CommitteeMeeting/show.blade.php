@@ -151,7 +151,7 @@
                     </table>
 
 
-                    @if(optional($committeeMeeting->committee_meeting_agenda_item)->isNotEmpty())
+                    @if(optional($committeeMeeting->agendaItems)->isNotEmpty())
                         <hr class="mb-0 mt-1">
                         {{--                    <h1 class="text-2xl text-center mb-2 mt-1 font-bold">Meeting Agendas</h1>--}}
                         <div class="relative overflow-x-auto ">
@@ -165,7 +165,7 @@
                                     <th class="py-2 px-2 text-center print:hidden">Action</th>
                                 </tr>
                                 </thead>
-                                @foreach($committeeMeeting->committee_meeting_agenda_item->sortBy('order') as $ai)
+                                @foreach($committeeMeeting->agendaItems->sortBy('order') as $ai)
                                     <tbody class="text-black text-sm leading-normal ">
                                     <tr class="border-b border-gray-200 hover:bg-gray-100">
                                         <td class="py-1 px-2 text-center">

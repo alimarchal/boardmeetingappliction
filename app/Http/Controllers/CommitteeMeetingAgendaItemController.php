@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCommitteeMeetingAgendaItemRequest;
 use App\Http\Requests\UpdateCommitteeMeetingAgendaItemRequest;
+use App\Models\CommitteeMeeting;
 use App\Models\CommitteeMeetingAgendaItem;
+use Illuminate\Http\Request;
 
 class CommitteeMeetingAgendaItemController extends Controller
 {
@@ -50,34 +52,35 @@ class CommitteeMeetingAgendaItemController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(CommitteeMeetingAgendaItem $committeeMeetingAgendaItem)
+    public function show(CommitteeMeeting $committeeMeeting, CommitteeMeetingAgendaItem $committeeMeetingAgendaItem)
     {
-        //
+        $auth_id = auth()->user()->id;
+        return view('CommitteeMeetingAgendaItem.show', compact('committeeMeeting','committeeMeetingAgendaItem','auth_id'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(CommitteeMeetingAgendaItem $committeeMeetingAgendaItem)
+    public function edit(CommitteeMeeting $committeeMeeting, CommitteeMeetingAgendaItem $committeeMeetingAgendaItem)
     {
-        return view('committee_meeting_agenda_items.edit', data: compact('committeeMeeting', 'agendaItem'));
+        return view('CommitteeMeetingAgendaItem.edit', data: compact('committeeMeeting', 'committeeMeetingAgendaItem'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCommitteeMeetingAgendaItemRequest $request, CommitteeMeetingAgendaItem $committeeMeetingAgendaItem)
+    public function update(Request $request, CommitteeMeeting $committeeMeeting, CommitteeMeetingAgendaItem $committeeMeetingAgendaItem)
     {
-        $agendaItem->update($request->all());
-        return redirect()->route('committee_meetings.show', $committeeMeeting->id)->with('success', 'Agenda Item updated successfully.');
+        $committeeMeetingAgendaItem->update($request->all());
+        return redirect()->route('committee_meeting.agenda_item.edit', [$committeeMeeting->id, $committeeMeetingAgendaItem->id])->with('success', 'Agenda Item updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CommitteeMeetingAgendaItem $committeeMeetingAgendaItem)
+    public function destroy(CommitteeMeeting $committeeMeeting, CommitteeMeetingAgendaItem $committeeMeetingAgendaItem)
     {
-        $agendaItem->delete();
-        return redirect()->route('committee_meetings.show', $committeeMeeting->id)->with('success', 'Agenda Item deleted successfully.');
+        $committeeMeetingAgendaItem->delete();
+        return redirect()->route('committee_meeting.show', $committeeMeeting->id)->with('success', 'Agenda Item deleted successfully.');
     }
 }
