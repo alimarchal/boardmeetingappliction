@@ -84,7 +84,7 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <x-status-message class="ml-4 mt-4"/>
                 <x-validation-errors class="ml-4 mt-4"/>
-                <form method="POST" action="{{ route('committee_meeting.agenda_item.update', [$committeeMeeting->id, $committeeMeetingAgendaItem->id]) }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('committee_meeting.update', [$committeeMeeting->id]) }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-4 mt-4 pl-8 pb-4 pt-4 pr-8">
