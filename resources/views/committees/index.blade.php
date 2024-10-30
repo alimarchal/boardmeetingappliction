@@ -102,7 +102,7 @@
                                         {{ $committee->name }}
                                     </td>
                                     <td class="py-1 px-2 text-center">
-                                        {{ $committee->type }}
+                                        {{ $committee->description }}
                                     </td>
                                     <td class="py-1 px-2 text-center hidden">
                                         {{ \Carbon\Carbon::parse($committee->created_at)->diffForHumans() }}

@@ -22,7 +22,21 @@ class StoreCommitteeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'members' => ['required', 'array', 'min:1'],
+            'members.*.user_id' => ['required', 'exists:users,id'],
+            'members.*.position' => ['required', 'string', 'max:255'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'members.required' => 'At least one committee member is required.',
+            'members.*.user_id.required' => 'Please select a user for each committee member.',
+            'members.*.user_id.exists' => 'Selected user does not exist.',
+            'members.*.position.required' => 'Position is required for each committee member.',
         ];
     }
 }

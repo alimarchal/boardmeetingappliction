@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('committee_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('role'); // Chairman, Member, Secretary etc.
+            $table->string('position')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

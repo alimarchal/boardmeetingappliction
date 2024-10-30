@@ -19,7 +19,8 @@
                         <h4 class="text-xl font-semibold mb-2">Members</h4>
                         <ul class="list-disc list-inside">
                             @forelse($committee->members ?? [] as $member)
-                                <li>{{ $member->name }} ({{ $member->user->email ?? 'No Email' }}) - {{ $member->position }}</li>
+                                <li>
+                                    {{ $member->user->name }} ({{ $member->position ?? 'No Position' }})</li>
                             @empty
                                 <li class="text-gray-500">No members found.</li>
                             @endforelse
@@ -29,7 +30,7 @@
                     <div class="mt-6">
                         <h4 class="text-xl font-semibold mb-2">Meetings</h4>
                         <ul class="list-disc list-inside">
-                            @forelse($committee->meetings ?? [] as $meeting)
+                            @forelse($committee->meetings() ?? [] as $meeting)
                                 <li>{{ \Carbon\Carbon::parse($meeting->meeting_date)->format('d-M-Y H:i') }} - {{ $meeting->title }}</li>
                             @empty
                                 <li class="text-gray-500">No meetings scheduled.</li>
@@ -37,28 +38,29 @@
                         </ul>
                     </div>
 
-                    @can('meeting-create')
-                        <x-validation-errors />
-                        <x-status-message/>
-                        <form method="POST" action="{{ route('committees.addMeeting', $committee->id) }}" class="mt-6">
-                            @csrf
-                            <div class="grid grid-cols-1 gap-4">
-                                <div>
-                                    <x-label for="meeting_date" value="Meeting Date" />
-                                    <x-input id="meeting_date" name="meeting_date" type="datetime-local" class="block mt-1 w-full" value="{{ old('meeting_date') }}" />
-                                </div>
+{{--                    @can('meeting-create')--}}
+{{--                        <x-validation-errors />--}}
+{{--                        <x-status-message/>--}}
+{{--                        <form method="POST" action="{{ route('committees.addMeeting', $committee->id) }}" class="mt-6">--}}
+{{--                        <form method="POST" action="#" class="mt-6">--}}
+{{--                            @csrf--}}
+{{--                            <div class="grid grid-cols-1 gap-4">--}}
+{{--                                <div>--}}
+{{--                                    <x-label for="meeting_date" value="Meeting Date" />--}}
+{{--                                    <x-input id="meeting_date" name="meeting_date" type="datetime-local" class="block mt-1 w-full" value="{{ old('meeting_date') }}" />--}}
+{{--                                </div>--}}
 
-                                <div>
-                                    <x-label for="title" value="Title" />
-                                    <x-input id="title" name="title" type="text" class="block mt-1 w-full" value="{{ old('title') }}" />
-                                </div>
+{{--                                <div>--}}
+{{--                                    <x-label for="title" value="Title" />--}}
+{{--                                    <x-input id="title" name="title" type="text" class="block mt-1 w-full" value="{{ old('title') }}" />--}}
+{{--                                </div>--}}
 
-                                <div class="flex items-center justify-end">
-                                    <x-button class="ml-4 bank-green-bg">Add Meeting</x-button>
-                                </div>
-                            </div>
-                        </form>
-                    @endcan
+{{--                                <div class="flex items-center justify-end">--}}
+{{--                                    <x-button class="ml-4 bank-green-bg">Add Meeting</x-button>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </form>--}}
+{{--                    @endcan--}}
                 </div>
             </div>
         </div>
