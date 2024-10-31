@@ -4,7 +4,7 @@
             {{ __('Committee Meetings') }}
         </h2>
 
-        @can('committee-meeting-create')
+        @can('create committee meetings')
             <div class="flex justify-center items-center float-right">
                 <a href="{{ route('committee_meeting.create') }}" class="flex items-center px-4 py-2 text-gray-600 bg-white border rounded-lg focus:outline-none hover:bg-gray-100 transition-colors duration-200 transform dark:text-gray-200 dark:border-gray-200  dark:hover:bg-gray-700 ml-2">
                     <svg data-slot="icon" fill="none" class="h-6 w-6" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -102,25 +102,25 @@
                                         {{ $meeting->status }}
                                     </td>
                                     <td class="py-1 px-2 text-center">
-                                        @can('committee-meeting-edit')
+                                        @canany(['edit committee meetings','view own committee meetings'])
                                             <a href="{{ route('committee_meeting.edit', $meeting->id) }}" class="inline-flex items-center px-4 py-2 bg-red-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                                 Edit
                                             </a>
-                                        @endcan
+                                        @endcanany
 
-                                        @can('committee-meeting-view')
+                                        @canany(['view member committee meetings','view own committee meetings'])
                                             <a href="{{ route('committee_meeting.show', $meeting->id) }}" class="inline-flex items-center px-4 py-2 bg-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                                 View
                                             </a>
-                                        @endcan
+                                        @endcanany
 
-                                        @can('committee-meeting-delete')
+                                        @canany(['view own committee meetings','delete committee meetings'])
                                             <form action="{{ route('committee_meeting.destroy', $meeting->id) }}" method="POST" class="inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Delete</button>
                                             </form>
-                                        @endcan
+                                        @endcanany
                                     </td>
                                 </tr>
                                 </tbody>

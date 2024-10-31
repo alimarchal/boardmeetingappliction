@@ -28,25 +28,26 @@ class CommitteeMeetingAgendaItemController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     */public function store(StoreCommitteeMeetingAgendaItemRequest $request, $committeeMeetingId)
-{
-    // Create a new agenda item and associate it with the committee meeting
-    $agendaItem = new CommitteeMeetingAgendaItem();
+     */
+    public function store(StoreCommitteeMeetingAgendaItemRequest $request, $committeeMeetingId)
+    {
 
-    // Populate the fields based on the request
-    $agendaItem->title = $request->title;
-    $agendaItem->description = $request->description; // Use the actual description from the request
-    $agendaItem->committee_meeting_id = $committeeMeetingId; // Set the committee meeting ID
-    $agendaItem->order = $request->order; // Assuming order is part of your request
-    $agendaItem->user_id = auth()->id(); // Get the authenticated user's ID
+        // Create a new agenda item and associate it with the committee meeting
+        $agendaItem = new CommitteeMeetingAgendaItem();
 
-    // Save the agenda item
-    $agendaItem->save();
+        // Populate the fields based on the request
+        $agendaItem->title = $request->title;
+        $agendaItem->description = $request->description; // Use the actual description from the request
+        $agendaItem->committee_meeting_id = $committeeMeetingId; // Set the committee meeting ID
+        $agendaItem->order = $request->order; // Assuming order is part of your request
+        $agendaItem->user_id = auth()->id(); // Get the authenticated user's ID
 
-    return redirect()->route('committee_meeting.show', $committeeMeetingId)
-                     ->with('success', 'Agenda Item added successfully.');
-}
+        // Save the agenda item
+        $agendaItem->save();
 
+        return redirect()->route('committee_meeting.show', $committeeMeetingId)
+            ->with('success', 'Agenda Item added successfully.');
+    }
 
 
     /**
@@ -55,7 +56,7 @@ class CommitteeMeetingAgendaItemController extends Controller
     public function show(CommitteeMeeting $committeeMeeting, CommitteeMeetingAgendaItem $committeeMeetingAgendaItem)
     {
         $auth_id = auth()->user()->id;
-        return view('CommitteeMeetingAgendaItem.show', compact('committeeMeeting','committeeMeetingAgendaItem','auth_id'));
+        return view('CommitteeMeetingAgendaItem.show', compact('committeeMeeting', 'committeeMeetingAgendaItem', 'auth_id'));
     }
 
     /**

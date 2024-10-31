@@ -96,6 +96,93 @@
                             </select>
                         </div>
 
+
+                        <div>
+                            {{-- Label component with required indicator --}}
+                            <x-label for="committee_id" value="Committee Name" class="block mt-1 w-full" :required="true"/>
+
+                            {{-- Select dropdown with styling --}}
+                            <select
+                                    name="committee_id"
+                                    id="committee_id"
+                                    {{-- Tailwind classes for styling the select element:
+                                        border-gray-300: Sets border color
+                                        mt-2: Adds margin top
+                                        focus:border-indigo-500: Changes border color on focus
+                                        focus:ring-indigo-500: Adds focus ring color
+                                        rounded-md: Rounds the corners
+                                        shadow-sm: Adds subtle shadow
+                                        w-full: Makes select full width --}}
+                                    class="border-gray-300 mt-2 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full"
+                                    required
+                            >
+                                {{-- Default empty option --}}
+                                <option value="">None</option>
+
+                                {{-- Loop through all committees --}}
+                                @foreach(\App\Models\Committee::all() as $committee)
+                                    {{-- Create an option for each committee with its ID as value --}}
+                                    <option value="{{ $committee->id }}">
+                                        {{-- Display committee name and member count --}}
+                                        {{ $committee->name }} ({{ $committee->members->count() }} members)
+                                    </option>
+                                @endforeach
+                            </select>
+
+                            {{-- Separate div to display detailed committee information --}}
+                            <div id="committee-details" class="mt-3 text-sm">
+                                {{-- Loop through committees again for detailed display --}}
+                                @foreach(\App\Models\Committee::all() as $committee)
+                                    {{-- Container for each committee's details
+                                        hidden: Initially hidden
+                                        data-committee-id: Used for JavaScript targeting --}}
+                                    <div class="committee-info hidden" data-committee-id="{{ $committee->id }}">
+                                        {{-- Committee name as header --}}
+                                        <h4 class="font-semibold">{{ $committee->name }}</h4>
+
+                                        {{-- Container for members list with margin --}}
+                                        <div class="ml-4 mt-2">
+                                            {{-- Members section header --}}
+                                            <p class="font-medium text-gray-700">Members:</p>
+
+                                            {{-- Bulleted list of members --}}
+                                            <ul class="list-disc ml-4">
+                                                {{-- Loop through each member of the committee --}}
+                                                @foreach($committee->members as $member)
+                                                    <li>{{ $member->user->name }} - ({{ $member->position }})</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        {{-- JavaScript to handle showing/hiding committee details --}}
+                        <script>
+                            // Add change event listener to the select dropdown
+                            document.getElementById('committee_id').addEventListener('change', function() {
+                                // Hide all committee info divs by adding 'hidden' class
+                                document.querySelectorAll('.committee-info').forEach(div => {
+                                    div.classList.add('hidden');
+                                });
+
+                                // Get the selected committee ID
+                                const selectedId = this.value;
+
+                                // If an option is selected (not the "None" option)
+                                if (selectedId) {
+                                    // Find the corresponding committee info div using data attribute
+                                    const selectedInfo = document.querySelector(`.committee-info[data-committee-id="${selectedId}"]`);
+
+                                    // If found, remove the 'hidden' class to show it
+                                    if (selectedInfo) {
+                                        selectedInfo.classList.remove('hidden');
+                                    }
+                                }
+                            });
+                        </script>
+
                         <div>
                             <x-label for="title" value="Meeting Title" :required="true"/>
                             <x-input id="title" name="title" class="block mt-1 w-full" type="text" required value="{{ old('title') }}"/>
@@ -125,10 +212,10 @@
                             <textarea class="block mt-1 w-full" name="description">{{ old('description') }}</textarea>
                         </div>
 
-                        <div>
-                            <x-label for="path_attachment" value="Attachment" />
-                            <x-input id="path_attachment" name="path_attachment" class="block mt-1 w-full" type="file"/>
-                        </div>
+{{--                        <div>--}}
+{{--                            <x-label for="path_attachment" value="Attachment" />--}}
+{{--                            <x-input id="path_attachment" name="path_attachment" class="block mt-1 w-full" type="file"/>--}}
+{{--                        </div>--}}
 
                         <div>
                             <x-label for="status" value="Status" :required="true"/>

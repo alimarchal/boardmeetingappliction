@@ -50,6 +50,16 @@ class PermissionsDemoSeeder extends Seeder
         Permission::create(['name' => 'users-edit']);
         Permission::create(['name' => 'users-view']);
 
+
+        Permission::create(['name' => 'view all committee meetings', 'guard_name' => 'web']);
+        Permission::create(['name' => 'view own committee meetings', 'guard_name' => 'web']);
+        Permission::create(['name' => 'view member committee meetings', 'guard_name' => 'web']);
+        Permission::create(['name' => 'create committee meetings', 'guard_name' => 'web']);
+        Permission::create(['name' => 'edit committee meetings', 'guard_name' => 'web']);
+        Permission::create(['name' => 'delete committee meetings', 'guard_name' => 'web']);
+
+
+
         // create roles and assign existing permissions
         $role1 = Role::create(['name' => 'Board Member']);
 //        $role1->givePermissionTo('edit articles');
@@ -62,6 +72,9 @@ class PermissionsDemoSeeder extends Seeder
         $role3 = Role::create(['name' => 'Super-Admin']);
         $role4 = Role::create(['name' => 'President']);
         $role5 = Role::create(['name' => 'Divisional Head']);
+
+        $role6 = Role::create(['name' => 'DH and Committee Secretary','guard_name' => 'web']);
+
         // gets all permissions via Gate::before rule; see AuthServiceProvider
 
         // create demo users

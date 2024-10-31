@@ -43,5 +43,41 @@ class CommitteeMeeting extends Model
     }
 
 
+    public function members()
+    {
+        return $this->hasMany(CommitteeMeetingMember::class, 'committee_meeting_id');
+    }
+
+    // Scopes
+    public function scopeVisibleToUser($query, $user)
+    {
+        if ($user->hasRole('Super-Admin')) {
+            return $query;
+        }
+
+//        if ($user->hasPermissionTo('view all committee meetings')) {
+//            return $query;
+//        }
+//
+        if ($user->hasPermissionTo('view own committee meetings')) {
+            return $query->where(function($q) use ($user) {
+                $q->where('user_id', $user->id)
+                    ->orWhereHas('members', function($sub) use ($user) {
+                        $sub->where('user_id', $user->id);
+                    });
+            });
+        }
+
+        if ($user->hasPermissionTo('view member committee meetings')) {
+
+            return $query->whereHas('members', function($q) use ($user) {
+                $q->where('user_id', $user->id);
+            });
+        }
+
+        return $query->where('id', null); // Returns no results
+    }
+
+
 
 }

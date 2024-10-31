@@ -25,7 +25,7 @@
 
 
 
-                    @can('meetings-access')
+                    @can('view all committee meetings')
                         <x-nav-link href="{{ route('committee_meeting.index') }}" :active="request()->routeIs('committee_meeting.*')">
                             {{ __('Committee Meetings') }}
                         </x-nav-link>

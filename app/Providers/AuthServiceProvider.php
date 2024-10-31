@@ -2,11 +2,16 @@
 
 namespace App\Providers;
 
+use App\Models\CommitteeMeeting;
+use App\Policies\CommitteeMeetingPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
+    protected $policies = [
+        CommitteeMeeting::class => CommitteeMeetingPolicy::class,
+    ];
     /**
      * Register services.
      */
