@@ -59,6 +59,14 @@ class PermissionsDemoSeeder extends Seeder
         Permission::create(['name' => 'delete committee meetings', 'guard_name' => 'web']);
 
 
+        Permission::create(['name' => 'view all committee meetings agenda', 'guard_name' => 'web']);
+        Permission::create(['name' => 'view own committee meetings agenda', 'guard_name' => 'web']);
+        Permission::create(['name' => 'view member committee meetings agenda', 'guard_name' => 'web']);
+        Permission::create(['name' => 'create committee meetings agenda', 'guard_name' => 'web']);
+        Permission::create(['name' => 'edit committee meetings agenda', 'guard_name' => 'web']);
+        Permission::create(['name' => 'delete committee meetings agenda', 'guard_name' => 'web']);
+
+
 
         // create roles and assign existing permissions
         $role1 = Role::create(['name' => 'Board Member']);

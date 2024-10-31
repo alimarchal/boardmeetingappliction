@@ -196,7 +196,7 @@
                                                 </a>
                                             @endcan
 
-                                            @can('committee_meeting_agenda_item-delete')
+                                            @can('delete committee meetings agenda')
                                                 <form action="{{ route('committee_meeting.agenda_item.destroy', [$committeeMeeting->id, $ai->id]) }}" method="POST" class="inline">
                                                     @csrf
                                                     @method('DELETE')
