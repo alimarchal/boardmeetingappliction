@@ -51,6 +51,13 @@ class PermissionsDemoSeeder extends Seeder
         Permission::create(['name' => 'users-view']);
 
 
+
+        Permission::create(['name' => 'committees-access']);
+        Permission::create(['name' => 'committees-create']);
+        Permission::create(['name' => 'committees-edit']);
+        Permission::create(['name' => 'committees-view']);
+
+
         Permission::create(['name' => 'view all committee meetings', 'guard_name' => 'web']);
         Permission::create(['name' => 'view own committee meetings', 'guard_name' => 'web']);
         Permission::create(['name' => 'view member committee meetings', 'guard_name' => 'web']);
