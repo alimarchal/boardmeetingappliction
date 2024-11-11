@@ -160,7 +160,7 @@
                                 <tr class="bg-gray-200 text-white bank-green-bg uppercase text-sm print:bg-transparent print:overflow-visible">
                                     <th class="py-2 px-2 text-center">ID</th>
                                     <th class="py-2 px-2 text-center">Agenda Title</th>
-                                   <th class="py-2 px-2 text-center">Attachment</th>
+{{--                                   <th class="py-2 px-2 text-center">Attachment</th>--}}
                                     <th class="py-2 px-2 text-center">Order</th>
                                     <th class="py-2 px-2 text-center print:hidden">Action</th>
                                 </tr>
@@ -174,18 +174,18 @@
                                         <td class="py-1 px-2 text-center">
                                             {{ $ai->title }}
                                         </td>
-                                        <td class="py-1 px-2 text-center print:hidden">
+{{--                                        <td class="py-1 px-2 text-center print:hidden">--}}
 
-                                            {{  $ai->path_attachment }}
-                                                <a href="{{ \Illuminate\Support\Facades\Storage::url($ai->path_attachment)  }}"  class="inline-flex" target="_blank">
-                                                    {{--                                                <img src="https://img.icons8.com/?size=128&id=48139&format=png" alt="Show" class="w-6 h-6">--}}
-                                                    <svg data-slot="icon" fill="none"  class="w-6 h-6 mx-auto" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13"></path>
-                                                    </svg>
-                                                </a>
+{{--                                            {{  $ai->path_attachment }}--}}
+{{--                                                <a href="{{ \Illuminate\Support\Facades\Storage::url($ai->path_attachment)  }}"  class="inline-flex" target="_blank">--}}
+{{--                                                    --}}{{--                                                <img src="https://img.icons8.com/?size=128&id=48139&format=png" alt="Show" class="w-6 h-6">--}}
+{{--                                                    <svg data-slot="icon" fill="none"  class="w-6 h-6 mx-auto" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">--}}
+{{--                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13"></path>--}}
+{{--                                                    </svg>--}}
+{{--                                                </a>--}}
 
 
-                                        </td>
+{{--                                        </td>--}}
 
                                         <td class="py-1 px-2 text-center">
                                             {{ $ai->order }}
@@ -194,14 +194,14 @@
 
                                         <td class="py-1 px-2 text-center print:hidden">
 
-                                            @can('committee_meeting_agenda_item-edit')
+                                            @can('edit committee meetings agenda')
                                                 <a href="{{ route('committee_meeting.agenda_item.edit', [$committeeMeeting->id, $ai->id]) }}"
                                                    class="inline-flex items-center px-4 py-2 bg-red-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-700 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                                     Edit
                                                 </a>
                                             @endcan
 
-                                            @can('committee_meeting_agenda_item-view')
+                                            @can('view member committee meetings agenda')
                                                 <a href="{{ route('committee_meeting.agenda_item.show', [$committeeMeeting->id, $ai->id]) }}"
                                                    class="inline-flex items-center px-4 py-2 bg-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                                     View
@@ -226,7 +226,7 @@
                         </div>
                     @endif
 
-                    @can('committee_meeting.agenda_item.create')
+                    @can('create committee meetings agenda')
                         <form method="POST" action="{{ route('committee_meeting.agenda_item.store', $committeeMeeting->id) }}" enctype="multipart/form-data" class="print:hidden">
                             <x-status-message class="ml-4 mt-4"/>
                             <x-validation-errors class="ml-4 mt-4"/>

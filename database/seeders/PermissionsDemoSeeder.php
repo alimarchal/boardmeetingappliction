@@ -72,6 +72,8 @@ class PermissionsDemoSeeder extends Seeder
         Permission::create(['name' => 'create committee meetings agenda', 'guard_name' => 'web']);
         Permission::create(['name' => 'edit committee meetings agenda', 'guard_name' => 'web']);
         Permission::create(['name' => 'delete committee meetings agenda', 'guard_name' => 'web']);
+        Permission::create(['name' => 'delete committee meetings agenda item', 'guard_name' => 'web']);
+        Permission::create(['name' => 'add committee meetings agenda item attachment', 'guard_name' => 'web']);
 
 
 

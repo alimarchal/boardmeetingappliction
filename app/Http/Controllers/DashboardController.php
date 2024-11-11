@@ -13,25 +13,33 @@ class DashboardController extends Controller
 {
     public function dashboard()
     {
-
-
-//        // Reset cached roles and permissions
-        app()[PermissionRegistrar::class]->forgetCachedPermissions();
-
-//        Permission::create(['name' => 'view all committee meetings', 'guard_name' => 'web']);
-//        Permission::create(['name' => 'view own committee meetings', 'guard_name' => 'web']);
-//        Permission::create(['name' => 'view member committee meetings', 'guard_name' => 'web']);
-//        Permission::create(['name' => 'create committee meetings', 'guard_name' => 'web']);
-//        Permission::create(['name' => 'edit committee meetings', 'guard_name' => 'web']);
-//        Permission::create(['name' => 'delete committee meetings', 'guard_name' => 'web']);
-
-
+    //
+    //
+    //        // Reset cached roles and permissions
+//            app()[PermissionRegistrar::class]->forgetCachedPermissions();
 //
 //
-//        Role::create(['name' => 'DH and Committee Secretary','guard_name' => 'web']);
+//            Permission::create(['name' => 'view all committee meetings', 'guard_name' => 'web']);
+//            Permission::create(['name' => 'view own committee meetings', 'guard_name' => 'web']);
+//            Permission::create(['name' => 'view member committee meetings', 'guard_name' => 'web']);
+//            Permission::create(['name' => 'create committee meetings', 'guard_name' => 'web']);
+//            Permission::create(['name' => 'edit committee meetings', 'guard_name' => 'web']);
+//            Permission::create(['name' => 'delete committee meetings', 'guard_name' => 'web']);
 //
-//        // Reset cached roles and permissions
-//        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+//
+//            Permission::create(['name' => 'view all committee meetings agenda', 'guard_name' => 'web']);
+//            Permission::create(['name' => 'view own committee meetings agenda', 'guard_name' => 'web']);
+//            Permission::create(['name' => 'view member committee meetings agenda', 'guard_name' => 'web']);
+//            Permission::create(['name' => 'create committee meetings agenda', 'guard_name' => 'web']);
+//            Permission::create(['name' => 'edit committee meetings agenda', 'guard_name' => 'web']);
+//            Permission::create(['name' => 'delete committee meetings agenda', 'guard_name' => 'web']);
+//            $role6 = Role::create(['name' => 'DH and Committee Secretary','guard_name' => 'web']);
+//
+//            Permission::create(['name' => 'delete committee meetings agenda item', 'guard_name' => 'web']);
+//            Permission::create(['name' => 'add committee meetings agenda item attachment', 'guard_name' => 'web']);
+//
+//    //        // Reset cached roles and permissions
+//            app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
 
         $lock_unlock_chart_data = ['Lock' => Meeting::where('status','Lock')->count(), 'Un-Lock' => Meeting::where('status','Unlock')->count()];

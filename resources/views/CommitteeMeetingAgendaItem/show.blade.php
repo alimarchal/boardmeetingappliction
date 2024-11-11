@@ -160,7 +160,7 @@
                                     <th class="py-2 px-2 text-center">Added By</th>
                                     <th class="py-2 px-2 text-center">Title</th>
                                     <th class="py-2 px-2 text-center print:hidden">Attachment</th>
-                                    @can('agenda-item-delete')
+                                    @can('delete committee meetings agenda item')
                                         <th class="py-2 px-2 text-center print:hidden">Action</th>
                                     @endcan
                                 </tr>
@@ -189,7 +189,7 @@
                                             @endif
 
                                         </td>
-                                        @can('agenda-item-delete')
+                                        @can('delete committee meetings agenda item')
                                             <td class="py-1 px-2 text-center print:hidden">
 
 
@@ -208,7 +208,7 @@
                         </div>
                     @endif
 
-                    @can('agenda-item-add-attachment')
+                    @can('add committee meetings agenda item attachment')
 
                         <form method="POST" action="{{ route('committee_meeting.agenda_item.comment.store', [$committeeMeeting->id, $committeeMeetingAgendaItem->id]) }}" enctype="multipart/form-data" class="print:hidden">
                             @csrf
