@@ -27,11 +27,14 @@ class UserController extends Controller implements HasMiddleware
     public function index()
     {
         $users = QueryBuilder::for(User::with('roles', 'permissions'))
+            ->whereDoesntHave('roles', function($query) {
+                $query->where('name', 'Super-Admin');
+            })
             ->allowedFilters([
-                'name',
-                'email',
-                'designation',
-                'status',
+            'name',
+            'email',
+            'designation',
+            'status',
             ])
             ->get();
         return view('users.index', compact('users'));

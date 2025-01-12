@@ -10,6 +10,9 @@ use App\Models\CommitteeMeetingAgendaItem;
 use App\Models\CommitteeMeetingMember;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class CommitteeMeetingController extends Controller
 {
@@ -33,10 +36,23 @@ class CommitteeMeetingController extends Controller
      */
     public function index()
     {
-        $committeeMeetings = CommitteeMeeting::visibleToUser(auth()->user())
+
+        $meetings = null;
+        if (Auth::user()->hasRole(['Super-Admin', 'DH and Committee Secretary'])) {
+            $committeeMeetings = CommitteeMeeting::visibleToUser(auth()->user())
+                ->with(['creator', 'members'])
+                ->orderByDesc('id')
+                ->get();
+        } else {
+            $committeeMeetings = CommitteeMeeting::visibleToUser(auth()->user())
             ->with(['creator', 'members'])
-            ->orderBy('created_at', 'desc')
+            ->where('status','Unlock')
+            ->orderByDesc('id')
             ->get();
+        }
+
+
+
         return view('CommitteeMeeting.index', compact('committeeMeetings'));
     }
 

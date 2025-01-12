@@ -83,6 +83,7 @@
                                 <th class="py-2 px-2 text-center">Meeting Title</th>
                                 <th class="py-2 px-2 text-center">Meeting Status</th>
                                 <th class="py-2 px-2 text-center">Status</th>
+                                <th class="py-2 px-2 text-center">Date & Time</th>
                                 <th class="py-2 px-2 text-center">Action</th>
                             </tr>
                             </thead>
@@ -100,6 +101,10 @@
                                     </td>
                                     <td class="py-1 px-2 text-center">
                                         {{ $meeting->status }}
+                                    </td>
+
+                                    <td class="py-1 px-2 text-center">
+                                        {{ Carbon\Carbon::parse($meeting->meeting_date)->format('d M, Y h:i A') }}
                                     </td>
                                     <td class="py-1 px-2 text-center">
                                         @canany(['edit committee meetings'])
